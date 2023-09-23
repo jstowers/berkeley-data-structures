@@ -1,4 +1,4 @@
-# HW #3
+# HW 3
 # Problem No. 3
 
 # Problem Statement
@@ -16,7 +16,6 @@
 # array = [0, 3, 6, 7, 3, 3, 0, 4]
 # n = 8
 # expected missing: [ 1, 2, 5 ]
-
 
 # Solution
 # -----------------
@@ -42,7 +41,7 @@ def findMissing(array):
         if not existing.get(i):
             missing.update({i:1})
 
-        # does value exist in missing?
+        # does value, array[i], exist in missing?
         # if yes, pop value from missing
         if missing.get(array[i]):
             missing.pop(array[i])
