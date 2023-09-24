@@ -20,7 +20,7 @@
 # Solution
 # -----------------
 
-# FindMissing receives an array of random numbers from range 0 to n-1
+# Find_missing_numbers receives an array of random numbers from range 0 to n-1
 # and returns a new array of any numbers missing from within that range.
 def find_missing_numbers(array):
     
