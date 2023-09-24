@@ -22,7 +22,7 @@
 
 # FindMissing receives an array of random numbers from range 0 to n-1
 # and returns a new array of any numbers missing from within that range.
-def findMissing(array):
+def find_missing_numbers(array):
     
     # define missing and existing dictionaries (hash tables)
     missing = {}
@@ -59,6 +59,6 @@ arrayList = [
 ]
 
 for index, array in enumerate(arrayList):
-    missingValues = findMissing(array)
+    missingValues = find_missing_numbers(array)
     print("--------------------------------------------------------------")
     print(f'{index + 1}. {str(array):25} missing values = {missingValues}')    
