@@ -1,8 +1,8 @@
 # HW 3
 # Problem No. 3
 
-# Problem Statement
-# -----------------
+# Find Missing Numbers
+# --------------------
 # Write a function that accepts an array of size n containing random numbers 
 # ranging from 0 to n-1. This array may contain duplicates, and the numbers are 
 # not arranged in any particular order. 
@@ -20,9 +20,8 @@
 # Solution
 # -----------------
 
-# FindMissing receives an array of random numbers from 0 to n-1
-# and returns a new array of any missing numbers within range form
-# 0 to n-1.
+# FindMissing receives an array of random numbers from range 0 to n-1
+# and returns a new array of any numbers missing from within that range.
 def findMissing(array):
     
     # define missing and existing dictionaries (hash tables)
