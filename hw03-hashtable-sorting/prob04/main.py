@@ -17,7 +17,7 @@
 # string = "aaaaaa"
 # expected: None
 
-def findFirstNonRepeating(string):
+def find_first_non_repeating(string):
 
     for i, char in enumerate(string):
 
@@ -45,7 +45,7 @@ def findFirstNonRepeating(string):
     
     return temp
 
-stringList = [
+string_list = [
     "aaaaabbbbbbc",
     "aabab",
     "aaaaaa",
@@ -55,11 +55,11 @@ stringList = [
     "bbqatx",
     "bbggbgge",
     "zztop",
-    "zzaayybb"
+    "zzaayybb",
 ]
 
-for index, string in enumerate(stringList):
+for index, string in enumerate(string_list):
     print("--------------------------------------------------------------")
-    result = findFirstNonRepeating(string)
-    print(f'{index + 1}. {str(string):15} first non repeating = {result}')    
+    result = find_first_non_repeating(string)
+    print(f'{index + 1}. {str(string):15} first non repeating = {result}')
     print("--------------------------------------------------------------")
