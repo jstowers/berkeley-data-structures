@@ -37,27 +37,34 @@ def longest_subarray(array, target):
             sum += array[pointer]
             length += 1
 
-            print("i =", i, " pointer =", pointer, " sum =", sum, " length =", length)
+            #print("i =", i, " pointer =", pointer, " sum =", sum, " length =", length)
 
-            if sum  == target and length > ht.get(sum):
-                print("ht.get(sum) =", ht.get(sum))
-                ht.update({sum: length})
+            if sum  == target:
+                if ht.get(sum) == None or length > ht.get(sum):
+                    ht.update({sum: length})
             pointer += 1
+
         print("ht=", ht)
 
     return ht[target]
 
 
-result = longest_subarray(array, target)
-print("result =", result)
+# define Test class and instantiate test cases
+class Test:
+    def __init__(self, array, target):
+        self.array = array
+        self.target = target
 
+test1 = Test([3, 1, -1, 2, -1, 5, -2, 3], 3)
+test2 = Test([3, 1, -1, 2, -1, 5, -2, 3], 6)
 
-# list = [
-#     {[3, 1, -1, 2, -1, 5, -2, 3], 3},
-# ]
+test_suite = [
+    test1,
+    test2
+]
 
-# for index, array in enumerate(list):
-#     missingValues = find_missing_numbers(array[i].)
-#     print("--------------------------------------------------------------")
-#     print(f'{index + 1}. {str(array):25} missing values = {missingValues}')  
+for index, test in enumerate(test_suite):
+    length = longest_subarray(test.array, test.target)
+    print("--------------------------------------------------------------")
+    print(f'{index + 1}. {str(test.array):25} target = {test.target} longest subarray = {length}')  
 
