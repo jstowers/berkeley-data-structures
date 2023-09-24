@@ -7,10 +7,13 @@ Algorithm               Worst Case              Best Case
 ----------------        ----------------        ----------------
 Bubble sort             O(n^2)                  O(n)
 
-worst case - O(n) passes * O(n) comparisons = O(n^2)
-best case - already sorted - O(1) passes * O(n) comparisons = O(n)
+worst case - O(n) passes, O(n) comparisons
+best case - already sorted: O(1) passes, O(n) comparisons
 
 Selection sort          O(n^2)                  O(n^2)
+
+worst case - O(n) swaps, O(n^2) comparisons
+best case - O(1) swaps, O(n^2) comparisons
 
 Insertion sort          O(n^2)                  O(n)
 
