@@ -1,0 +1,19 @@
+HW 3
+Problem No. 1
+
+Describe the worst case data and best case data for each of the following sorting algorithms:
+
+Algorithm               Worst Case              Best Case
+----------------        ----------------        ----------------
+Bubble sort             O(n^2)                  O(n)
+
+worst case - O(n) passes * O(n) comparisons = O(n^2)
+best case - already sorted - O(1) passes * O(n) comparisons = O(n)
+
+Selection sort          O(n^2)                  O(n^2)
+
+Insertion sort          O(n^2)                  O(n)
+
+Merge sort              O(n log n)              O(n log n)
+
+Quicksort               O(n^2)                  O(n log n)
