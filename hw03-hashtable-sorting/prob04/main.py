@@ -31,9 +31,11 @@ def findFirstNonRepeating(string):
 
         # char changes
         else:
+            # temp is repeating, so assign new char to temp
             if(len(temp) > 1):
                 temp = char
             
+            # first non-repeating is temp
             elif(len(temp) == 1):
                 break
 
