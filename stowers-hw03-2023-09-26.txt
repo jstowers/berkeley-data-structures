@@ -1,0 +1,231 @@
+Joseph Stowers
+Tuesday, September 26, 2023
+COMPSCIX404.1-015
+HW #3
+
+1.
+Describe the worst case data and best case data for each of the following sorting algorithms:
+
+Algorithm               Worst Case              Best Case
+----------------        ----------------        ----------------
+Bubble sort             O(n^2)                  O(n)
+worst case: O(n) passes, O(n) comparisons = O(n^2)
+best case: already sorted: O(1) passes, O(n) comparisons = O(n)
+
+Selection sort          O(n^2)                  O(n^2)
+worst case: O(n) swaps, O(n^2) comparisons = O(n^2)
+best case: O(1) swaps, O(n^2) comparisons = O(n^2)
+
+Insertion sort          O(n^2)                  O(n)
+worst case: O(n^2) swaps, O(n^2) comparisons
+best case: O(1) swaps, O(n) comparisons
+
+Merge sort              O(n log n)              O(n log n)
+worst case = average = best: O(log n) split, O(n) merge
+
+Quicksort               O(n^2)                  O(n log n)
+worst case: O(n) splits, O(n^2) comparisons
+best case: log(n) splits, O(n log n) comparisons
+
+
+2.
+Implement the insertion sort function.
+
+array = [10, 2, 4, 5, -1, 3, 0, 24, 1, 15, 17, 11, -23]
+
+def insertion_sort(array):
+
+    for i in range(1, len(array)):
+
+        # set temp value at current index
+        temp = array[i]
+
+        # starting index for each value that will be compared
+        position = i-1
+
+        # inner while loop for backward comparison of the sorted values
+        while position >= 0:
+            # temp is smaller so swap values
+            if array[position] > temp:
+                array[position + 1] = array[position]
+                position -= 1
+
+            # break while loop: value at position >= temp
+            else:
+                break
+        
+        # move temp value into gap
+        array[position+1] = temp
+        print(array)
+
+    return array
+
+result = insertion_sort(array)
+print("result =", result)
+
+
+3.
+Write a function that accepts an array of size n containing random numbers 
+ranging from 0 to n-1. This array may contain duplicates, and the numbers are 
+not arranged in any particular order. 
+
+This function should return a new array that consists of any missing numbers 
+within the range from 0 to n-1.  This function must have a time complexity 
+of O(n) to get full credit.
+
+# Find_missing_numbers receives an array of random numbers from range 0 to n-1
+# and returns a new array of any numbers missing from within that range.
+def find_missing_numbers(array):
+    
+    # define missing and existing dictionaries (hash tables)
+    missing = {}
+    existing = {}
+
+    for i in range (len(array)):
+
+        # does value, array[i], exist in existing?
+        # if no, add value to existing
+        if not existing.get(array[i]):
+            existing.update({array[i]:1})
+        
+        # does index, i, exist in existing?
+        # if no, add index to missing
+        if not existing.get(i):
+            missing.update({i:1})
+
+        # does value, array[i], exist in missing?
+        # if yes, pop value from missing
+        if missing.get(array[i]):
+            missing.pop(array[i])
+
+    return list(missing.keys())
+
+arrayList = [
+    [0, 3, 6, 7, 3, 3, 0, 4],
+    [0, 0, 1, 3],
+    [0, 1, 2, 5, 5, 5, 4],
+    [0, 1, 2, 3, 4, 5],
+    [5, 4, 3, 2, 1, 0],
+    [1, 2, 0, 3, 5, 4],
+    [4, 4, 4, 4, 4, 4],
+    [4, 3, 3, 5, 1]
+]
+
+for index, array in enumerate(arrayList):
+    missingValues = find_missing_numbers(array)
+    print("--------------------------------------------------------------")
+    print(f'{index + 1}. {str(array):25} missing values = {missingValues}')
+
+
+4.
+Write a function that returns the first non-repeating character in a string with O(n) 
+efficiency. It should return none or null if there are no non-repeating characters.
+
+def find_first_non_repeating(string):
+
+    # empty string check
+    if len(string) == 0:
+        print("the string is empty: no non-repeating characters")
+        return None
+
+    for i, char in enumerate(string):
+
+        # add first char to temp
+        if i == 0:
+            temp = char
+
+        # char repeats
+        elif char == temp[0]:
+            temp = temp + char
+
+        # char changes
+        else:
+            # temp is repeating, so assign new char to temp
+            if(len(temp) > 1):
+                temp = char
+            
+            # first non-repeating is temp
+            elif(len(temp) == 1):
+                break
+
+    # reach end of string and no non-repeating char found
+    if len(temp) > 1:
+        return None
+    
+    return temp
+
+string_list = [
+    "aaaaabbbbbbc",
+    "aabab",
+    "aaaaaa",
+    "zyxwvu",
+    "aabac",
+    "ababa",
+    "bbqatx",
+    "bbggbgge",
+    "zztop",
+    "zzaayybb",
+]
+
+for index, string in enumerate(string_list):
+    print("--------------------------------------------------------------")
+    result = find_first_non_repeating(string)
+    print(f'{index + 1}. {str(string):15} first non repeating = {result}')
+    print("--------------------------------------------------------------")
+
+
+5.
+Write a function that given an array of integers and a target value, 
+returns the length of the longest subarray with a sum equal to the target value.
+
+Note: while the sliding window technique is acceptable as a solution, 
+try solving this using a hash table.
+
+def longest_subarray(array, target):
+    sum = 0
+    max_length = 0
+
+    # hash table to store {sum : index}
+    ht = {}
+
+    for i in range(len(array)):
+        sum += array[i]
+
+        # set max_length as sum is calculated
+        if(sum == target):
+            max_length = max(max_length, i+1)
+        
+        # calculate difference between sum and target
+        diff = sum - target
+
+        # lookup difference in hash table
+        # if it exists, calculate length of current index minus
+        # index of diff; compare max_length and set if greater
+        if(ht.get(diff)):
+            max_length = max(max_length, i - ht.get(diff))
+    
+        # add sum to hash table
+        if sum not in ht:
+            ht.update({sum: i})
+
+    return max_length
+
+
+# define Test class and instantiate test cases
+class Test:
+    def __init__(self, array, target):
+        self.array = array
+        self.target = target
+
+test1 = Test([3, 1, -1, 2, -1, 5, -2, 3], 3)
+test2 = Test([3, 1, -1, 2, -1, 5, -2, 3], 6)
+
+test_suite = [
+    test1,
+    test2
+]
+
+for index, test in enumerate(test_suite):
+    length = longest_subarray(test.array, test.target)
+    print(f'{index + 1}. {str(test.array):25} target = {test.target} longest subarray = {length}')
+    print("--------------------------------------------------------------")
