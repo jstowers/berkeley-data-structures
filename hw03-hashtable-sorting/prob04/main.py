@@ -19,6 +19,11 @@
 
 def find_first_non_repeating(string):
 
+    # empty string check
+    if len(string) == 0:
+        print("the string is empty: no non-repeating characters")
+        return None
+
     for i, char in enumerate(string):
 
         # add first char to temp

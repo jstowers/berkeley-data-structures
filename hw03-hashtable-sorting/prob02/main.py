@@ -10,8 +10,6 @@ array = [10, 2, 4, 5, -1, 3, 0, 24, 1, 15, 17, 11, -23]
 
 def insertion_sort(array):
 
-    print(array)
-
     for i in range(1, len(array)):
 
         # set temp value at current index

@@ -82,6 +82,14 @@ By dividing terms, we get:
 
 [ . . ] + k = x
 
+Since we have a target sum, k, and a cumulative sum, x, we have a difference, [ . . ] that is equal to x - k.
+
+If that difference is stored in a hash table, we can look up its corresponding index value, i_diff.
+By subtracting i - i_diff, we get the length of k.
+
 If we have a value such that x - k = [ . . ], then we know that the length of k will 
-be the current index of * minus the index of that sum [ . . ].  This sum is the one that is
-stored in the hash table.
+be the current index of * minus the index of that sum [ . . ].  This sum and its corresponding
+index are stored in a hash table, _ht_, in the form: { sum: index }:
+
+ht = { 3:0, 4:1, ...}
+

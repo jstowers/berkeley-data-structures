@@ -64,4 +64,3 @@ for index, test in enumerate(test_suite):
     length = longest_subarray(test.array, test.target)
     print(f'{index + 1}. {str(test.array):25} target = {test.target} longest subarray = {length}')
     print("--------------------------------------------------------------")
-
