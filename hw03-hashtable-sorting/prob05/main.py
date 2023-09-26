@@ -16,37 +16,34 @@
 # target = 3
 # result = 5 => [-1, 2, -1, 5, -2]
 
-
-array = [3, 1, -1, 2, -1, 5, -2, 3]
-
-target = 3
-
 def longest_subarray(array, target):
+    sum = 0
+    max_length = 0
+
+    # hash table to store {sum : index}
     ht = {}
 
-    for i, num in enumerate(array):
-        sum = num
-        length = 1
+    for i in range(len(array)):
+        sum += array[i]
 
-        if (sum == target and ht.get(sum) == None):
-            ht.update({sum: length})
+        # set max_length as sum is calculated
+        if(sum == target):
+            max_length = max(max_length, i+1)
+        
+        # calculate difference between sum and target
+        diff = sum - target
 
-        pointer = i+1
+        # lookup difference in hash table
+        # if it exists, calculate length of current index minus
+        # index of diff
+        if(ht.get(diff)):
+            max_length = max(max_length, i - ht.get(diff))
+    
+        # add sum to hash table
+        if sum not in ht:
+            ht.update({sum: i})
 
-        while (pointer < len(array)):
-            sum += array[pointer]
-            length += 1
-
-            #print("i =", i, " pointer =", pointer, " sum =", sum, " length =", length)
-
-            if sum  == target:
-                if ht.get(sum) == None or length > ht.get(sum):
-                    ht.update({sum: length})
-            pointer += 1
-
-        print("ht=", ht)
-
-    return ht[target]
+    return max_length
 
 
 # define Test class and instantiate test cases
@@ -65,6 +62,6 @@ test_suite = [
 
 for index, test in enumerate(test_suite):
     length = longest_subarray(test.array, test.target)
+    print(f'{index + 1}. {str(test.array):25} target = {test.target} longest subarray = {length}')
     print("--------------------------------------------------------------")
-    print(f'{index + 1}. {str(test.array):25} target = {test.target} longest subarray = {length}')  
 
