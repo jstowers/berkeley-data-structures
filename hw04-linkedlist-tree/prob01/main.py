@@ -29,6 +29,7 @@ def reverseDoublyLinkedList(dll):
         if prev is None:
             dll.tail = curr
 
+        # reverse elements
         next = curr.next
         curr.prev = next
         curr.next = prev
