@@ -7,3 +7,41 @@
 # Do not simply print it out. It must have the references correctly set in reversed order.
 # Also, write a print method – this should help with debugging.
 
+from dsa.DoublyLinkedList import Node, DoublyLinkedList
+
+# create using array method
+array = [10, 20, 30, 40, 50]
+dll = DoublyLinkedList()
+dll.from_array(array)
+
+def reverseDoublyLinkedList(dll):
+
+    print("===== before =====")
+    dll.print()
+    print()
+
+    curr = dll.head
+  
+    while curr is not None:
+        prev = curr.prev
+       
+        # set tail
+        if prev is None:
+            dll.tail = curr
+
+        next = curr.next
+        curr.prev = next
+        curr.next = prev
+
+        # set head
+        if next is None:
+            dll.head = curr
+
+        curr = next
+
+    print("===== after =====")
+    dll.print()
+    return dll
+
+result = reverseDoublyLinkedList(dll)
+print("result =", result)
