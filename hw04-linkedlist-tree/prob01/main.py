@@ -14,12 +14,16 @@ array = [10, 20, 30, 40, 50]
 dll = DoublyLinkedList()
 dll.from_array(array)
 
+# ReverseDoublyLinkedList receives a doubly linked list and returns 
+# the list with each element's previous and next pointer references 
+# reversed and the head and tail pointer references updated.
 def reverseDoublyLinkedList(dll):
 
     print("===== before =====")
     dll.print()
     print()
 
+    # set current node
     curr = dll.head
   
     while curr is not None:
@@ -38,6 +42,7 @@ def reverseDoublyLinkedList(dll):
         if next is None:
             dll.head = curr
 
+        # increment current node
         curr = next
 
     print("===== after =====")
