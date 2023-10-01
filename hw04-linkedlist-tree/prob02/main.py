@@ -14,18 +14,6 @@
 
 from dsa.LinkedList import LinkedList
 
-# define linked lists
-list1 = [2, 10, 5, 3, 4]
-list2 = [4, 7, 8, 3, 11]
-
-link1 = LinkedList()
-link1.from_array(list1)
-print("link1 =", link1)
-
-link2 = LinkedList()
-link2.from_array(list2)
-print("link2 =", link2)
-
 # CreateUnion receives two linked lists and returns a 
 # new linked list representing a union of the two lists.
 def createUnion(link1, link2):
@@ -59,5 +47,28 @@ def updateUnion(union, ht, link_list):
 
         curr = curr.next
 
-result = createUnion(link1, link2)
-print("result =", result)
+# define Test class and instantiate test cases
+class Test:
+    def __init__(self, list1 = None, list2 = None):
+        self.list1 = list1
+        self.list2 = list2
+        self.link_list1 = LinkedList()
+        self.link_list1.from_array(self.list1)
+        self.link_list2 = LinkedList()
+        self.link_list2.from_array(self.list2)
+
+test1 = Test([2, 10, 5, 3, 4], [4, 7, 8, 3, 11])
+test2 = Test([29, 23, 19, 17, 13, 11, 7], [2, 3, 5, 7, 11])
+
+# define and execute test suite
+test_suite = [
+    test1,
+    test2
+]
+
+for index, test in enumerate(test_suite):
+    union = createUnion(test.link_list1, test.link_list2)
+    print(f'{index + 1}. link1 = {test.link_list1}') 
+    print(f'   link2 = {test.link_list2}')
+    print(f'   union = {union}')
+    print("--------------------------------------------------------------")
