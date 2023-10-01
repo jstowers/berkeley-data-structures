@@ -26,13 +26,11 @@ def createUnion(link1, link2):
 
     return union
 
-# UpdateUnion receives a union set, a hash table to 
-# track values, and a linked list.  It updates the
-# union set if a value from the linked list 
-# is unique to the union set.
+# UpdateUnion receives a union set, a hash table to track values, 
+# and a linked list.  It updates the union set if a value from the 
+# linked list is unique to the union set.
 # 
-# Time complexity = O(n) where n is the length of the
-# linked list
+# Time complexity = O(n) where n is the length of the linked list
 def updateUnion(union, ht, link_list):
     curr = link_list.head
 
