@@ -15,7 +15,7 @@
 from dsa.LinkedList import LinkedList
 
 # CreateUnion receives two linked lists and returns a 
-# new linked list representing a union of the two lists.
+# new linked list representing a union set of the two lists.
 def createUnion(link1, link2):
 
     union = LinkedList()
@@ -27,9 +27,12 @@ def createUnion(link1, link2):
     return union
 
 # UpdateUnion receives a union set, a hash table to 
-# track values, and a link_list.  It updates the
-# hash table and union set if a value from the
-# link_list is unique to the union set.
+# track values, and a linked list.  It updates the
+# union set if a value from the linked list 
+# is unique to the union set.
+# 
+# Time complexity = O(n) where n is the length of the
+# linked list
 def updateUnion(union, ht, link_list):
     curr = link_list.head
 
@@ -59,11 +62,14 @@ class Test:
 
 test1 = Test([2, 10, 5, 3, 4], [4, 7, 8, 3, 11])
 test2 = Test([29, 23, 19, 17, 13, 11, 7], [2, 3, 5, 7, 11])
+test3 = Test([52, 58, 68, 31, 53, 61, 88, 47, 50, 55, 62, 65, 59, 35],
+             [57, 64, 81, 48, 78, 17, 22, 18, 70, 47, 59, 80, 51, 56])
 
 # define and execute test suite
 test_suite = [
     test1,
-    test2
+    test2,
+    test3,
 ]
 
 for index, test in enumerate(test_suite):
