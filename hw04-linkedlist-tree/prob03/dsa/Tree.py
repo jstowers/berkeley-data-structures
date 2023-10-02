@@ -40,7 +40,7 @@ class Tree:
             return
         
         while current is not None:
-            if value <= current.value:
+            if value < current.value:
                 if current.left is None:
                     current.left = Node(value)
                     return
