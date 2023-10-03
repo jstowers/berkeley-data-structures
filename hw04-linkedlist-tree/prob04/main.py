@@ -13,7 +13,7 @@
 # 2. Left descendants contain values lower than ancestor nodes
 # 3. Right descendants contain values greater than ancestor nodes
 
-from dsa.BinaryTree import BinaryTree, Node
+from dsa.BinaryTree import BinaryTree
 
 INT_MAX = 4294967296
 INT_MIN = -4294967296
