@@ -1,0 +1,556 @@
+Joseph Stowers
+Tuesday, October 3, 2023
+COMPSCIX404.1-015
+HW #4
+
+===================================================================================================
+
+1.
+# Reverse Doubly Linked List
+# --------------------------
+# Write a function to reverse the elements in a doubly linked list. 
+# Do not simply print it out. It must have the references correctly set in reversed order.
+# Also, write a print method – this should help with debugging.
+
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+        self.prev = None
+    
+class DoublyLinkedList:
+    def __init__(self, head=None, tail=None, count=0):
+        self.head = head
+        self.tail = tail
+        self.count = count
+
+    def from_array(self, mylist=None):
+        self.head = None
+        self.tail = None
+        self.count = 0
+
+        if mylist is None:
+            return
+
+        # append each from given list
+        for element in mylist:
+            self.append(element)
+        
+    def __repr__(self):
+        s = "[ "
+        current = self.head
+        while current is not None:
+            s += str(current.value) + " "
+            current = current.next
+
+        return f"{s}] Count: {self.count}"
+    
+    def reverse(self):
+        current = self.tail
+        while current is not None:
+            print(current.value, end=" ")
+            current = current.prev
+        print()
+
+    def search(self, value):
+        i = 0
+        current = self.head
+        while current is not None:
+            if current.value == value:
+                return i
+            i += 1
+            current = current.next
+        raise Exception("Value not found")
+    
+    def insert(self, index, value):
+        ''' need to check for index out of bounds '''
+        i = 0
+        
+        # insert front
+        if index == 0:
+            self.prepend(value)
+            return
+            
+        current = self.head
+        while index < i or current is not None:
+            if i == index:
+                break
+            current = current.next
+            i += 1
+
+        if index > i:
+            raise Exception("Index Out of Bounds")
+        new_node = Node(value)
+        
+        new_node.next = current
+        new_node.prev = current.prev
+        current.prev = new_node
+        new_node.prev.next = new_node
+
+        self.count += 1
+
+    def prepend(self, value):
+        ''' prepend value at the beginning of the list '''
+        
+        if self.head is None:
+            self.head = Node(value)
+            if self.count == 0:
+                self.tail = self.head
+            self.count += 1
+            return
+
+        new_node = Node(value)
+        new_node.next = self.head
+        self.head.prev = new_node
+        self.head = new_node
+        self.count += 1
+
+    def append(self, value):
+        ''' append value to the end of the list '''
+        
+        if self.head is None:
+            self.head = Node(value)
+            if self.count == 0:
+                self.tail = self.head
+            self.count += 1
+            return
+        
+        # create new node
+        new_node = Node(value)
+
+        # set previous link to point to last node
+        new_node.prev = self.tail
+
+        # change tail link to point to new node
+        self.tail.next = new_node
+        
+        # set tail to new node
+        self.tail = new_node
+
+        # increment count
+        self.count += 1
+        
+    def delete(self, index):
+        if self.head is None:
+            raise Exception("DoublyLinkedList is Empty")
+
+        i = 0
+        if index == 0:
+            self.head = self.head.next
+            self.head.prev = None
+            self.count -= 1
+            return
+        
+        current = self.head
+        while current is not None:
+            if index == i:
+                current.prev.next = current.next
+                if current.next is not None:
+                    current.next.prev = current.prev
+                else:
+                    self.tail = current.prev
+
+                self.count -= 1
+                return
+            current = current.next
+            i += 1
+        raise Exception("Index not found")
+    
+    def print(self):
+        if self.head is None:
+            raise Exception("DoublyLinkedList is Empty")
+        
+        current = self.head
+
+        i = 0
+
+        while current is not None:
+            currentNode = current.value
+
+            # first node
+            if i == 0:
+                previousNode = None
+                if current.next is None:
+                    nextNode = None
+                else:
+                    nextNode = current.next.value
+
+            # remaining nodes
+            else:
+                previousNode = current.prev.value
+                if current.next is None:
+                    nextNode = None
+                else:
+                    nextNode = current.next.value
+
+            print("---------------------------------------------------------------------")
+            print(f'i      previous      current       next          head      tail')
+            print(f'{i}      {str(previousNode):12}  {str(currentNode):13} {str(nextNode):12}  {str(self.head.value):8}  {str(self.tail.value):10} ')
+
+            current = current.next
+            i += 1
+
+from dsa.DoublyLinkedList import Node, DoublyLinkedList
+
+# create using array method
+array = [10, 20, 30, 40, 50]
+dll = DoublyLinkedList()
+dll.from_array(array)
+
+# ReverseDoublyLinkedList receives a doubly linked list and returns 
+# the list with each element's previous and next pointer references 
+# reversed and the head and tail pointer references updated.
+def reverseDoublyLinkedList(dll):
+
+    print("===== before =====")
+    dll.print()
+    print()
+
+    # set current node
+    curr = dll.head
+  
+    while curr is not None:
+        prev = curr.prev
+       
+        # set tail
+        if prev is None:
+            dll.tail = curr
+
+        # reverse elements
+        next = curr.next
+        curr.prev = next
+        curr.next = prev
+
+        # set head
+        if next is None:
+            dll.head = curr
+
+        # increment current node
+        curr = next
+
+    print("===== after =====")
+    dll.print()
+    return dll
+
+result = reverseDoublyLinkedList(dll)
+print("result =", result)
+
+
+===================================================================================================
+
+2.
+# Union of Two Linked Lists
+# --------------------------
+# Write a function that takes two linked list and outputs a union of these 
+# two linked lists. Make it as efficient as possible. You can assume that 
+# each list consists of unique numbers and are not necessarily sorted. 
+# Also, the order of the output is not significant.
+
+# Example
+# ---------
+# [ 2, 10, 5, 3, 4] and [ 4, 7, 8, 3, 11 ] has a union of [ 2, 10, 3, 4, 5, 7, 8, 11 ]
+
+from dsa.LinkedList import LinkedList
+
+# CreateUnion receives two linked lists and returns a 
+# new linked list representing a union set of the two lists.
+def createUnion(link1, link2):
+
+    union = LinkedList()
+    ht = {}
+
+    updateUnion(union, ht, link1)
+    updateUnion(union, ht, link2)
+
+    return union
+
+# UpdateUnion receives a union set, a hash table to track values, 
+# and a linked list.  It updates the union set if a value from the 
+# linked list is unique to the union set.
+# 
+# Time complexity = O(n) where n is the length of the linked list
+def updateUnion(union, ht, link_list):
+    curr = link_list.head
+
+    while curr is not None:
+        value = curr.value
+        count = ht.get(value)
+
+        # if value not in ht,
+        # add to ht and union
+        if count is None:
+            ht.update({value:1})
+            union.append(value)
+        else:
+            ht.update({value:count+1})
+
+        curr = curr.next
+
+# define Test class and instantiate test cases
+class Test:
+    def __init__(self, list1 = None, list2 = None):
+        self.list1 = list1
+        self.list2 = list2
+        self.link_list1 = LinkedList()
+        self.link_list1.from_array(self.list1)
+        self.link_list2 = LinkedList()
+        self.link_list2.from_array(self.list2)
+
+test1 = Test([2, 10, 5, 3, 4], [4, 7, 8, 3, 11])
+test2 = Test([29, 23, 19, 17, 13, 11, 7], [2, 3, 5, 7, 11])
+test3 = Test([52, 58, 68, 31, 53, 61, 88, 47, 50, 55, 62, 65, 59, 35],
+             [57, 64, 81, 48, 78, 17, 22, 18, 70, 47, 59, 80, 51, 56])
+
+# define and execute test suite
+test_suite = [
+    test1,
+    test2,
+    test3,
+]
+
+for index, test in enumerate(test_suite):
+    union = createUnion(test.link_list1, test.link_list2)
+    print(f'{index + 1}. link1 = {test.link_list1}') 
+    print(f'   link2 = {test.link_list2}')
+    print(f'   union = {union}')
+    print("--------------------------------------------------------------")
+
+
+===================================================================================================
+
+3.
+
+# Binary Search Tree (BST) Operations
+# -----------------------------------
+# Write the following binary search tree functions to:
+# 1. Return the minimum value
+# 2. Return the maximum value
+# 3. Return the sum of all values
+
+class Node:
+    def __init__(self, value, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+
+    def print(self, level=0):
+        if self.right:
+            self.right.print(level + 1)
+        print("   " * level + str(self.value))
+        if self.left:
+            self.left.print(level + 1)
+
+# Binary Search Tree (BST)
+class Tree:
+    def __init__(self, node=None):
+        self.root = node
+        
+    def search(self, value):
+        current = self.root
+        
+        while current is not None:
+            if value == current.value:
+                return True
+            elif value < current.value:
+                current = current.left
+            elif value > current.value:
+                current = current.right
+            else:
+                return False
+        
+        return False
+    
+    def insert(self, value):
+
+        current = self.root
+
+        if self.root is None:
+            self.root = Node(value)
+            return
+        
+        while current is not None:
+            if value < current.value:
+                if current.left is None:
+                    current.left = Node(value)
+                    return
+                else:
+                    current = current.left
+            elif value > current.value:
+                if current.right is None:
+                    current.right = Node(value)
+                    return
+                else:
+                    current = current.right
+            else:
+                return 
+        
+        return
+   
+    def delete_node(self, value, node=None):
+        if node is None:
+            node = self.root
+        
+        if value < node.value:
+            node.left = self.delete_node(value, node.left)
+        elif value > node.value:
+            node.right = self.delete_node(value, node.right)
+        else:
+            if node.left is None:
+                branch = node.right
+                node = None
+                return branch
+            elif node.right is None:
+                branch = node.left
+                node = None
+                return branch
+            
+            branch = self.min_node(node.right)
+            node.value = branch.value
+            node.right = self.delete_node(branch.value, node.right)
+            
+        return node
+
+    def min_node(self, node=None):
+        if node is None:
+            node = self.root
+        
+        if node.left is None:
+            return node
+        else:
+            return self.min_node(node.left)
+    
+    def min_value(self):
+        return self.min_node().value
+    
+    def max_node(self, node=None):
+        if node is None:
+            node = self.root
+        
+        if node.right is None:
+            return node
+        else:
+            return self.max_node(node.right)
+    
+    def max_value(self):
+        return self.max_node().value
+    
+    def print(self):
+        self.root.print()
+
+    # public method to sum all node values
+    def sum(self):
+        return self.__sum_in_order(self.root, 0)
+    
+    # private method with depth first traversal
+    def __sum_in_order(self, node, total):
+        if node is not None:
+            total = self.__sum_in_order(node.left, total)
+            total += node.value
+            total = self.__sum_in_order(node.right, total)
+        return total
+
+from dsa.Tree import Tree
+from dsa.sorttools import rand_int_array
+
+# initialize a random array of integers
+array = rand_int_array(20, 118)
+#array = [7, 19, 24, 27, 35, 22, 15, 19, 29, 35, 21, 26, 28, 30, 5, 3, 6]
+print("array =", array)
+
+# min value
+min = min(array)
+print("min =", min)
+
+# max value
+max = max(array)
+print("max =", max)
+
+# sum of all values
+sum = sum(array)
+print("sum =", sum)
+
+# initialize BST and populate with array elements
+tree = Tree()
+for i, e in enumerate(array):
+    tree.insert(e)
+
+tree.print()
+
+# find minimum value
+min_value = tree.min_value()
+print("min_value =", min_value)
+
+# find maximum value
+max_value = tree.max_value()
+print("max_value =", max_value)
+
+# find sum of all values
+tree_sum = tree.sum()
+print("tree_sum =", tree_sum)
+
+
+===================================================================================================
+
+4.
+
+# Is Binary Tree a BST?
+# ---------------------
+# Write a function that accepts a binary tree and verifies whether 
+# it fulfills binary search tree conditions.
+
+# BST Conditions
+#
+# 1. No duplicate values
+# 2. Left descendants contain values lower than ancestor nodes
+# 3. Right descendants contain values greater than ancestor nodes
+
+from dsa.BinaryTree import BinaryTree, Node
+
+INT_MAX = 4294967296
+INT_MIN = -4294967296
+
+def is_tree_BST(tree):
+    return is_BST_util(tree.root, INT_MIN, INT_MAX)
+
+def is_BST_util(node, min, max):
+
+    if node is None:
+        return True
+    
+    if node.value < min or node.value > max:
+        return False
+    
+    return (is_BST_util(node.left, min, node.value - 1) and
+            is_BST_util(node.right, node.value+1, max))
+
+# define Test class and instantiate test cases
+class Test:
+    def __init__(self, list = None):
+        self.list = list
+        self.tree = BinaryTree()
+        self.tree.from_array(self.list)
+
+test1 = Test([2, 10, 4]) #false
+test2 = Test([4, 2, 10]) #true
+test3 = Test([10, 2, 4]) #false
+test4 = Test([10, 2, 15]) #true
+test5 = Test([10, 8, 15, 6, 9]) #false
+test6 = Test([10, 8, 15, 12, 5]) #true
+test7 = Test([15, 7, 20, 17, 2, 23, 12, 21]) #true
+
+# define and execute test suite
+test_suite = [
+    test1,
+    test2,
+    test3,
+    test4,
+    test5,
+    test6,
+    test7
+]
+
+for index, test in enumerate(test_suite):
+    result = is_tree_BST(test.tree)
+    print(test.tree.print())
+    print(f'{index + 1}. is tree a BST = {result}') 
+    print("--------------------------------------------------------------")
