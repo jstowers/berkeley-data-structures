@@ -15,31 +15,6 @@
 
 from dsa.BinaryTree import BinaryTree, Node
 
-def is_tree_BST(tree):
-
-    # in order traversal => left, root, right
-    # if previous value is greater than current value, return false
-    def validate(current, previous):
-
-        if current and current.value is not None:
-            print("current =", current.value)
-
-        if current is None:
-            print("INSIDE IF NONE")
-            return True
-        if validate(current.left, previous) == False:
-            print("INSIDE IF2")
-            return False
-        print("previous.value =", previous)
-        print("current.value =", current.value)
-
-        if previous is not None and previous.value >= current.value:
-            return False
-        previous = current
-        return validate(current.right, previous)
-    
-    return validate(tree.root, None)
-
 INT_MAX = 4294967296
 INT_MIN = -4294967296
 
@@ -88,4 +63,3 @@ for index, test in enumerate(test_suite):
     print(test.tree.print())
     print(f'{index + 1}. is tree a BST = {result}') 
     print("--------------------------------------------------------------")
-
