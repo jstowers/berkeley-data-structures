@@ -16,3 +16,5 @@ Week 1 - Big O Notation and Arrays
 Week 2 - Basic Data Structures and Recursion
 
 Week 3 - Hash Tables and Sorting
+
+Week 4 - Linked Lists and Trees
