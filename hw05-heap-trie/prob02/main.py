@@ -11,10 +11,13 @@
 from math import floor, log
 
 class MinHeap:
-    def __init__(self, array=[]):
-        self.array = array
-    
+    def __init__(self):
+        self.array = []
+
     def root_node(self):
+        if self.size() == 0:
+            return None
+
         return self.array[0]
 
     def last_node(self):
@@ -23,15 +26,15 @@ class MinHeap:
     def size(self):
         return len(self.array)
     
+    def parent_index(self, index):
+        return floor((index-1)/2)
+    
     def left_child_index(self, index):
         return (index * 2) + 1
     
     def right_child_index(self, index):
         return (index * 2) + 2
     
-    def parent_index(self, index):
-        return floor((index-1)/2)
-
     def insert(self, value):
         # add new value at end of array
         self.array.append(value)
@@ -105,3 +108,6 @@ mh.print()
 
 mh.insert(12)
 mh.print()
+
+root = mh.root_node()
+print("first =", root)
