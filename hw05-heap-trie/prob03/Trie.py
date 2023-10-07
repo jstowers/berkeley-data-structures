@@ -38,18 +38,21 @@ class Trie:
         if current is None:
             current = self.root
 
+        # once there is more than 1 child, the longest 
+        # prefix ends
         if len(current.children) != 1 or current == "*":
             if len(prefix) == 0:
                 return None
             else: return prefix
 
+        # the longest prefix continues to build one
+        # character at a time
         if len(current.children) == 1:
             for child in current.children:
                 prefix += child
                 current = current.children[child]
         
         return self.longest_prefix(current, prefix)
-
         
     # search returns word if it exists
     def search(self, s):
