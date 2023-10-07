@@ -13,19 +13,6 @@
 
 from Trie import Trie
 
-words = ["apple", "appetite", "apparatus", "appliance"]
-
-trie1 = Trie()
-
-for word in words:
-    trie1.insert(words)
-
-# print words
-#trie1.print_words()
-
-
-
-
 # define Test class and instantiate test cases
 class Test:
     def __init__(self, array = []):
