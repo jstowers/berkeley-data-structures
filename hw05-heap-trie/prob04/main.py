@@ -18,7 +18,7 @@
 # 'grapefruit' returns 'grapef'
 # 
 # returns: ['a', 'b', 'ch', 'cr', 'grape', 'grapef']
-
+                                                           
 from Trie import Trie
 
 words = ['apple', 'banana', 'cherry', 'cranberry', 'grape', 'grapefruit'] 
