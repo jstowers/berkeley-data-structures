@@ -70,45 +70,45 @@ class Trie:
         return self.iterate_root_children()
     
     def iterate_root_children(self, current = None, prefix = "", results = []):
-        print("INSIDE iterate")
-        print("prefix =", prefix)
-
+        print("INSIDE iterate: prefix =", prefix)
+    
         # set current to root node
         if current is None:
             current = self.root
 
-        # what does sorted do?
-        # key = char
-        # node = TrieNode object
-        # children = { 'h':TrieNode, 'r':TrieNode }
-
-        #items = current.children.items()
-        #print("items =", items)
-        #print("length items =", len(items))
+        print("current.freq =", current.freq)
 
         for key, node in sorted(current.children.items()):
 
+            # iteration reaches end of word (*)
             if key == self.end_char:
-                # if node.freq > 1:
-                #     results.append(prefix)
-                # else:
+                print("end of word")
+                
+                if current.freq > 1:
+                    results.append(prefix)
+                else:
                     results.append(prefix[0])
+                print("results =", results)
+                
 
-            # elif len(prefix) == node.freq:
-            #     results.append(prefix)
+            # iteration reaches char with children > 1
+            elif node is not None and node.freq > 1:
+                print("multiple children")
+                base_prefix = prefix + key
+                print("base_prefix =", base_prefix)
+                self.iterate_root_children(node, base_prefix, results)
 
             else:
-                if node is not None and node.freq > 1:
-                    print("node value =", node.value)
-                    print("node frequency =", node.freq)
-                    print("prefix =", prefix)
-                
-                if node.freq > 1 and len(prefix) == node.freq:
-                    results.append(prefix)
+                if current.freq > 1:
+                    if key == '*':
+                        results.append(prefix)
+                    else:
+                        results.append(prefix+key)
+                    continue
 
                 self.iterate_root_children(node, prefix + key, results)
 
-        print("results =", results)
+       
         return results
 
 

@@ -33,20 +33,19 @@ target = "cranberry"
 search_result = trie.search(target)
 print("search found =", search_result)
 
-
-
 # define Test class and instantiate test cases
 class Test:
     def __init__(self, array = []):
         self.array = array
         self.trie = Trie()
 
-#test1 = Test(['apple', 'banana', 'cherry', 'cranberry', 'grape', 'grapefruit'])
-test2 = Test(['apple', 'banana', 'cherry', 'grape', 'orange', 'opals'])
+test1 = Test(['apple', 'banana', 'cherry', 'cranberry', 'grape', 'grapefruit'])
+test2 = Test(['apple', 'banana', 'cherry', 'grape', 'opals', 'orange'])
 
 # define and execute test suite
 test_suite = [
-    test2,
+    test1,
+    #test2,
 ]
 
 for index, test in enumerate(test_suite):
