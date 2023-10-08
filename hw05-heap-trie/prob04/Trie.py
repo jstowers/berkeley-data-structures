@@ -67,150 +67,43 @@ class Trie:
             self.insert(word)
 
         # find shortest prefix
-        return self.iterate_root_children()
+        return self.shortest_prefix(None, "", [])
     
-    def iterate_root_children(self, current = None, prefix = "", results = []):
-        print("INSIDE iterate: prefix =", prefix)
+    def shortest_prefix(self, current = None, prefix = "", results = []):
     
         # set current to root node
         if current is None:
             current = self.root
-
-        print("current.freq =", current.freq)
 
         for key, node in sorted(current.children.items()):
 
             # iteration reaches end of word (*)
             if key == self.end_char:
-                print("end of word")
-                
+                #print("end of word")
                 if current.freq > 1:
+                    #print("append for multiple child")
                     results.append(prefix)
                 else:
+                    #print("append for single child")
                     results.append(prefix[0])
-                print("results =", results)
                 
-
-            # iteration reaches char with children > 1
-            elif node is not None and node.freq > 1:
-                print("multiple children")
-                base_prefix = prefix + key
-                print("base_prefix =", base_prefix)
-                self.iterate_root_children(node, base_prefix, results)
+            # iteration reaches node with children > 1
+            # recursion call for multiple children
+            elif node.freq > 1:
+                self.shortest_prefix(node, prefix + key, results)
 
             else:
                 if current.freq > 1:
-                    if key == '*':
-                        results.append(prefix)
-                    else:
-                        results.append(prefix+key)
+                    #print("append for freq > 1")
+                    results.append(prefix+key)
+                    #print("continue")
                     continue
-
-                self.iterate_root_children(node, prefix + key, results)
-
-       
-        return results
-
-
-    def shortest_prefix(self, current = None, prefix = "", results = []):
-
-        # set current to root node
-        if current is None:
-            current = self.root
-        
-
-        
-        # for each of current's children, iterate through the chars
-        for child in current.children:
-
-            if len(current.children) > 1:
-                print("number children =", len(current.children[child]))
-
-
-            if child == "*":
-                print("LAST LETTER")
-                results.append(prefix[0])
-                prefix = ""
-            
-                # ?? - how do I go to the next child of the root node?
-
-            else:
-                # add char to prefix
-                prefix += child
-
-                # update current
-                return self.shortest_prefix(current.children[child], prefix, results)
-            
-            current = current.children[child]
-            print("prefix =", prefix)
-
+                
+                #print("other recursion call")
+                # recursion call for single child
+                self.shortest_prefix(node, prefix + key, results)
 
         return results
-
-
-    # def shortest_prefix(self, current = None, prefix = "", i = 0, results = []):
-
-    #     # set current to root node
-    #     if current is None:
-    #         current = self.root
-
-    #     # child is a char => 'a', 'c'
-    #     for i, child in enumerate(current.children):
-
-    #         print("current.children =", current.children.i)
-
-    #         # length of current.children:
-    #         #length = len(current.children)
-    #         #print("length =", length)
-
-    #         if child == "*":
-    #             print("INSIDE END")
-    #             results.append(prefix[0])
-    #             # repeat with next child and an empty prefix
-    #             i += 1
-
-    #         else:
-    #             prefix += child
-    #             print("prefix =", prefix)
-    #             #current = current.children[child]
-    #             return self.shortest_prefix(current.children[child], prefix, i, results)
-            
-    #         return self.shortest_prefix(current.children[i], "", i, results)
-
-    #     return results
-     
-
-            # if length == 0:
-
-            # results.append(child)
-        
-            # does child have any children?
-            # YES
-            # => this prefix is not unique
-            # => add child character to prefix
-            # => update current to its children
-            # => call shortest_prefix with updated current and prefix
-            # current = current.children[child]
-            # print('current =', current)
-
-            # NO
-            # => then this child is the shortest unique prefix
-            # add prefix to results
-            # set 
-            #searchResults = self.search(child)
-            #print("searchResults =", searchResults.value)
-
-
-            #print('child =', child)
-  
-            #print("result =", results)
-
-          
-        #return results
-
-
-    
-
 
     # Search receives a target string, s, and iterates through
     # each char, c, of the string.

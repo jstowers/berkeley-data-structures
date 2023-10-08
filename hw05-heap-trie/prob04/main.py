@@ -41,11 +41,21 @@ class Test:
 
 test1 = Test(['apple', 'banana', 'cherry', 'cranberry', 'grape', 'grapefruit'])
 test2 = Test(['apple', 'banana', 'cherry', 'grape', 'opals', 'orange'])
+test3 = Test(["apparatus", "appetite", "apple", "appliance"])
+test4 = Test(["apple", "banana", "orange", "peach"])
+test5 = Test(["lemon", "lemongrass", "licorice", "lime", "lychee"])
+test6 = Test(["lime", "limeberry", "lingonberry"])
+test7 = Test(["grape", "grapefruit", "grapes", "grapple"])
 
 # define and execute test suite
 test_suite = [
     test1,
-    #test2,
+    test2,
+    test3,
+    test4,
+    test5,
+    test6,
+    test7,
 ]
 
 for index, test in enumerate(test_suite):
