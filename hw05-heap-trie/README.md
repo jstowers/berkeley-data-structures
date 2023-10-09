@@ -75,6 +75,7 @@ The root node `10` is smaller than all of its descendants.  The same goes for th
 ### Complete Trees
 
 The tree is completely filled with nodes.  On each level, from left to right, all nodes have values.
+
 The bottom row _can_ have empty positions, as long as there are no nodes to the right of an empty position.
 
 Complete:
@@ -105,3 +106,10 @@ Incomplete:
 1. __weakly ordered__ - while heaps have _some_ order, their descendants in a max heap are greater than their ancestor, this doesn't make a heap amenable to searching.
 
 2. __root node__ is the greatest value in a max heap.  The root node is the smallest value in a min heap.
+
+
+### Alternative Heap Implementations
+
+An array implementation is the most common.
+
+An alternate implementation is to use linked nodes.
