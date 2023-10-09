@@ -1,15 +1,13 @@
 ## Complete Tree
 
-A complete tree has every level filled except the last one.
+1. A complete tree has every level filled except the last one.
 
-On the last level, nodes are filled as far left as possible.
+2. On the last level, nodes are filled as far left as possible.
 
 
-# Alternate Heap Implementations
+## Implementation
 
-An array implementation for a heap is the most comon.
-
-An alternate implementation is to use linked nodes.
-
+I used a Node structure to represent the node value, and its
+left and right siblings.
 
 
