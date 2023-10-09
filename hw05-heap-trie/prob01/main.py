@@ -21,6 +21,13 @@ ct.insert(60)
 ct.insert(70)
 ct.insert(80)
 ct.insert(90)
+ct.insert(100)
+ct.insert(110)
+ct.insert(120)
+ct.insert(130)
+ct.insert(140)
+ct.insert(150)
+ct.insert(160)
 
 # print complete tree
 ct.print()
