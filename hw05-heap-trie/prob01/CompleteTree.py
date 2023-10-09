@@ -81,8 +81,6 @@ class CompleteTree:
                 return
             elif current.left is not None:
                 current = current.left
-            elif current.right is not None:
-                current = current.right
         return
     
     # supporting print method
