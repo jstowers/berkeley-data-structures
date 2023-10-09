@@ -18,3 +18,5 @@ Week 2 - Basic Data Structures and Recursion
 Week 3 - Hash Tables and Sorting
 
 Week 4 - Linked Lists and Trees
+
+Week 5 - Tree Traversal, Heaps, Tries
