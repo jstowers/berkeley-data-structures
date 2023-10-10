@@ -15,7 +15,7 @@ class Node:
         if self.left:
             self.left.print(level + 1)
 
-# Complete tree class
+# Complete Tree class
 class CompleteTree:
     def __init__(self, node=None):
         self.root = node
@@ -29,15 +29,15 @@ class CompleteTree:
             return None
   
         # BFS
-        last_value = self.level_order()
-        return last_value.value
+        last_node = self.level_order()
+        return last_node.value
     
     # Size returns the number of nodes in the tree
     def size(self):
         return self.count
     
     # Level_Order conducts a breadth-first traversal
-    # of the tree
+    # of the tree and returns the last node
     def level_order(self, node = None):
 
         if node is None:
@@ -57,13 +57,14 @@ class CompleteTree:
 
         return last
 
-    # Insert add a node to the complete tree,
+    # Insert adds a node to the complete tree,
     # following the complete tree conditions
     def insert(self, value):
         current = self.root
 
         if self.root is None:
             self.root = Node(value)
+            # array for printing purposes only
             self.array.append(value)
             self.count += 1
             return
@@ -71,11 +72,13 @@ class CompleteTree:
         while current is not None:
             if current.left is None:
                 current.left = Node(value)
+                # array for printing purposes only
                 self.array.append(value)
                 self.count += 1
                 return
             elif current.right is None:
                 current.right = Node(value)
+                # array for printing purposes only
                 self.array.append(value)
                 self.count += 1
                 return
@@ -99,7 +102,7 @@ class CompleteTree:
     def last_level(self, h):
         return self.first_level(h+1)
 
-    # print heap in tree form
+    # print tree
     def print(self, width = None):
         if width is None:
             width = max(len(str(e)) for e in self.array)
