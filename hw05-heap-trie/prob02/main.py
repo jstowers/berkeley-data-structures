@@ -9,42 +9,38 @@
 
 from MinHeap import MinHeap
 
+# min heap #1
 mh = MinHeap()
 mh.insert(50)
-mh.print()
-
 mh.insert(40)
-mh.print()
-
 mh.insert(30)
-mh.print()
-
 mh.insert(20)
-mh.print()
-
 mh.insert(10)
-mh.print()
-
 mh.insert(15)
-mh.print()
-
 mh.insert(17)
-mh.print()
-
 mh.insert(12)
+
+# print min heap
 mh.print()
+print()
 
-while mh.size() > 0:
-    print(mh.delete())
+# sort min heap
+sorted1 = mh.sort()
+print("sorted1 =", sorted1)
 
-print("\n------------------------------\n")
+print("\n------------------------------")
 
+# min heap #2
 minheap = MinHeap()
 
 for i in [49, 9, 36, 16, 81, 64, 25]:
     minheap.insert(i)
 
+# print min heap
 minheap.print()
+print()
 
-while minheap.size() > 0:
-    print(minheap.delete())
+# sort min heap
+sorted2 = minheap.sort()
+print("sorted2 =", sorted2)
+

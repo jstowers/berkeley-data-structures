@@ -45,6 +45,18 @@ class MinHeap:
         # heapify up
         self.swim(i_new)
 
+    # sort returns an array of the heap values sorted
+    def sort(self):
+        sorted = []
+
+        if self.size() == 0:
+            return None
+
+        while self.size() > 0:
+            sorted.append(self.delete())
+
+        return sorted
+
     # heapify up
     def swim(self, i):
 
