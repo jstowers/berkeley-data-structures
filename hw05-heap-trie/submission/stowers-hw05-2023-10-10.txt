@@ -387,7 +387,6 @@ class MinHeap:
 # words = ["apple", "appetite", "apparatus", "appliance"]
 # solution => "app"
 
-# main.py
 from Trie import Trie
 
 # define Test class and instantiate test cases
@@ -401,6 +400,7 @@ test2 = Test(["apple", "orange", "banana", "peach"])
 test3 = Test(["lemon", "lime", "lemongrass", "lychee", "licorice"])
 test4 = Test(["lime", "limeberry", "lingonberry"])
 test5 = Test(["grape", "grapes", "grapefruit", "grapple"])
+test6 = Test(["grape", "grapes", "grapefruit", "grapeseed"])
 
 # define and execute test suite
 test_suite = [
@@ -409,6 +409,7 @@ test_suite = [
     test3,
     test4,
     test5,
+    test6,
 ]
 
 for index, test in enumerate(test_suite):
@@ -566,3 +567,256 @@ class Trie:
         else:
             return suggestions
     
+
+===================================================================================================
+
+# Shortest Unique Prefix
+# -------------------------
+#
+# Given an array of words, write a function that returns the shortest
+# unique prefix of each word.
+#
+# ex) 
+# words = ['apple', 'banana', 'cherry', 'cranberry', 'grape', 'grapefruit'] 
+#
+# 'apple' returns 'a'
+# 'banana' returns 'b'
+# 'cherry' returns 'ch'
+# 'cranberry' returns 'cr'
+# 'grape' returns 'grape'
+# 'grapefruit' returns 'grapef'
+# 
+# returns: ['a', 'b', 'ch', 'cr', 'grape', 'grapef']
+
+# main.py
+from Trie import Trie
+
+# define Test class and instantiate test cases
+class Test:
+    def __init__(self, array = []):
+        self.array = array
+        self.trie = Trie()
+
+test1 = Test(['apple', 'banana', 'cherry', 'cranberry', 'grape', 'grapefruit'])
+test2 = Test(['apple', 'banana', 'cherry', 'grape', 'opals', 'orange'])
+test3 = Test(["apparatus", "appetite", "apple", "appliance"])
+test4 = Test(["apple", "banana", "orange", "peach"])
+test5 = Test(["lemon", "lemongrass", "licorice", "lime", "lychee"])
+test6 = Test(["lime", "limeberry", "lingonberry"])
+test7 = Test(["grape", "grapefruit", "grapes", "grapple"])
+
+# define and execute test suite
+test_suite = [
+    test1,
+    test2,
+    test3,
+    test4,
+    test5,
+    test6,
+    test7,
+]
+
+for index, test in enumerate(test_suite):
+    print()
+    result = test.trie.shortest_prefix_from_array(test.array)
+    print(f'{index + 1}. {test.array}')
+    print(f'   shortest prefix = {result}')
+    print()
+    print("--------------------------------------------------------------")
+
+# Trie.py
+class TrieNode:
+    def __init__(self, value):
+        self.children = {}
+        self.value = value
+        self.freq = 1
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode("")
+        self.end_char = "*"
+            
+    def insert(self, word):
+        current = self.root
+        for c in word:
+
+            if c not in current.children:
+                current.children[c] = TrieNode(c)
+            else:
+                current.children[c].freq += 1
+            current = current.children[c]
+        current.children[self.end_char] = None
+        current.is_end = True
+
+    def longest_prefix_from_array(self, array):
+
+        # check for empty array
+        if len(array) == 0:
+            raise Exception("array is empty")
+        
+        # add each word to trie
+        for word in array:
+            self.insert(word)
+
+        # find longest prefix
+        return self.longest_prefix()
+
+    def longest_prefix(self, current = None, prefix =""):
+        
+        # set current to root node
+        if current is None:
+            current = self.root
+
+        # once there is more than 1 child, 
+        # the longest prefix ends
+        if len(current.children) != 1 or current == "*":
+            if len(prefix) == 0:
+                return None
+            else: return prefix
+
+        # longest prefix continues to build 
+        # one character at a time
+        if len(current.children) == 1:
+            for child in current.children:
+                prefix += child
+                current = current.children[child]
+        
+        return self.longest_prefix(current, prefix)
+    
+    def shortest_prefix_from_array(self, array):
+
+        # check for empty array
+        if len(array) == 0:
+            raise Exception("array is empty")
+        
+        # add each word to trie
+        for word in array:
+            self.insert(word)
+
+        # find shortest prefix
+        return self.shortest_prefix(None, "", [])
+    
+    def shortest_prefix(self, current = None, prefix = "", results = []):
+    
+        # set current to root node
+        if current is None:
+            current = self.root
+
+        for key, node in sorted(current.children.items()):
+
+            # iteration reaches end of word (*)
+            if key == self.end_char:
+                if current.freq > 1:
+                    results.append(prefix)
+                else:
+                    results.append(prefix[0])
+                
+            # iteration reaches node with children > 1
+            # recursion call for multiple children
+            elif node.freq > 1:
+                self.shortest_prefix(node, prefix + key, results)
+
+            else:
+                if current.freq > 1:
+                    results.append(prefix+key)
+                    continue
+                
+                # recursion call for single child
+                self.shortest_prefix(node, prefix + key, results)
+
+        return results
+
+    # Search receives a target string, s, and iterates through
+    # each char, c, of the string.
+    #
+    # If the target string exists in the trie, search returns the
+    # last TrieNode of the target string.
+    # If the target string does not exist, search returns None.
+    def search(self, s):
+        if len(s) == 0:
+            return None
+
+        current = self.root
+        for c in s:
+            if c not in current.children:
+                return None
+            current = current.children[c]
+        return current
+    
+    def delete(self, word, i=0, current=None):
+        if i == len(word):
+            return True
+
+        if current is None:
+            current = self.root
+            word = word + self.end_char
+
+        char = word[i]
+        if char not in current.children:
+            return False
+        
+        next_node = current.children[char]
+        print("pre: ",word, char, i+1)
+        should_delete_ref = self.delete(word, i + 1, next_node)
+        print("post: ",word, char, i+1, should_delete_ref)
+
+        if should_delete_ref:
+            del current.children[char]
+            return len(current.children) == 0
+        return False
+    
+    def delete_preorder(self, word, i=0, current=None):
+        if i == len(word):
+            return True
+
+        if current is None:
+            current = self.root
+            word = word + self.end_char
+
+        char = word[i]
+        if char not in current.children:
+            return False
+        
+        next_node = current.children[char]
+
+        del current.children[char]
+
+        should_delete_ref = self.delete(word, i + 1, next_node)
+
+        return False
+
+    def print_keys(self, current):
+        if current is None:
+            return
+
+        for c in current.children:
+            self.print_keys(current.children[c])
+            
+    def print_words(self, node=None, word="", words=None):
+        if words is None:
+            words = []
+        current = node
+        if node is None:
+            current = self.root
+        
+        for key, node in sorted(current.children.items()):
+            if key == self.end_char:
+                words.append(word)
+            else:
+                self.print_words(node, word + key, words)
+        return words
+    
+    def autocomplete(self, prefix):
+        current = self.search(prefix)
+        if current is None:
+            return None
+        return self.print_words(current, prefix)
+    
+    def suggest(self, s):
+        if s is None or len(s) == 0:
+            return None
+        suggestions = self.autocomplete(s)
+        if suggestions is None or len(suggestions) == 0:
+            return self.suggest(s[:-1])
+        else:
+            return suggestions
