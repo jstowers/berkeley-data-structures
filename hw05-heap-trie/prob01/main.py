@@ -8,7 +8,6 @@
 # using arrays.  How would we do this if the tree was 
 # implemented using nodes?
 
-from math import log
 from CompleteTree import CompleteTree
 
 ct = CompleteTree()
