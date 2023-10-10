@@ -174,7 +174,6 @@ class Queue:
         return f"[{arrstr}] Front: {self.front} count: {self.count} Capacity: {len(self.array)}"
 
 # main.py
-from math import log
 from CompleteTree import CompleteTree
 
 ct = CompleteTree()
@@ -373,6 +372,44 @@ class MinHeap:
             field = (2 * below -1) * width
             print(gap.join(self.prepare(e, field) for e in self.level(h)))
 
+# main.py
+from MinHeap import MinHeap
+
+# min heap #1
+mh = MinHeap()
+mh.insert(50)
+mh.insert(40)
+mh.insert(30)
+mh.insert(20)
+mh.insert(10)
+mh.insert(15)
+mh.insert(17)
+mh.insert(12)
+
+# print min heap
+mh.print()
+print()
+
+# sort min heap
+sorted1 = mh.sort()
+print("sorted1 =", sorted1)
+
+print("\n------------------------------")
+
+# min heap #2
+minheap = MinHeap()
+
+for i in [49, 9, 36, 16, 81, 64, 25]:
+    minheap.insert(i)
+
+# print min heap
+minheap.print()
+print()
+
+# sort min heap
+sorted2 = minheap.sort()
+print("sorted2 =", sorted2)
+
 
 ===================================================================================================
 
@@ -386,39 +423,6 @@ class MinHeap:
 # ex) 
 # words = ["apple", "appetite", "apparatus", "appliance"]
 # solution => "app"
-
-from Trie import Trie
-
-# define Test class and instantiate test cases
-class Test:
-    def __init__(self, array = []):
-        self.array = array
-        self.trie = Trie()
-
-test1 = Test(["apple", "appetite", "apparatus", "appliance"])
-test2 = Test(["apple", "orange", "banana", "peach"])
-test3 = Test(["lemon", "lime", "lemongrass", "lychee", "licorice"])
-test4 = Test(["lime", "limeberry", "lingonberry"])
-test5 = Test(["grape", "grapes", "grapefruit", "grapple"])
-test6 = Test(["grape", "grapes", "grapefruit", "grapeseed"])
-
-# define and execute test suite
-test_suite = [
-    test1,
-    test2,
-    test3,
-    test4,
-    test5,
-    test6,
-]
-
-for index, test in enumerate(test_suite):
-    print()
-    result = test.trie.longest_prefix_from_array(test.array)
-    print(f'{index + 1}. {test.array}')
-    print(f'   longest prefix = {result}')
-    print()
-    print("--------------------------------------------------------------")
 
 # Trie.py
 class TrieNode:
@@ -566,6 +570,40 @@ class Trie:
             return self.suggest(s[:-1])
         else:
             return suggestions
+
+# main.py
+from Trie import Trie
+
+# define Test class and instantiate test cases
+class Test:
+    def __init__(self, array = []):
+        self.array = array
+        self.trie = Trie()
+
+test1 = Test(["apple", "appetite", "apparatus", "appliance"])
+test2 = Test(["apple", "orange", "banana", "peach"])
+test3 = Test(["lemon", "lime", "lemongrass", "lychee", "licorice"])
+test4 = Test(["lime", "limeberry", "lingonberry"])
+test5 = Test(["grape", "grapes", "grapefruit", "grapple"])
+test6 = Test(["grape", "grapes", "grapefruit", "grapeseed"])
+
+# define and execute test suite
+test_suite = [
+    test1,
+    test2,
+    test3,
+    test4,
+    test5,
+    test6,
+]
+
+for index, test in enumerate(test_suite):
+    print()
+    result = test.trie.longest_prefix_from_array(test.array)
+    print(f'{index + 1}. {test.array}')
+    print(f'   longest prefix = {result}')
+    print()
+    print("--------------------------------------------------------------")
     
 
 ===================================================================================================
@@ -587,42 +625,6 @@ class Trie:
 # 'grapefruit' returns 'grapef'
 # 
 # returns: ['a', 'b', 'ch', 'cr', 'grape', 'grapef']
-
-# main.py
-from Trie import Trie
-
-# define Test class and instantiate test cases
-class Test:
-    def __init__(self, array = []):
-        self.array = array
-        self.trie = Trie()
-
-test1 = Test(['apple', 'banana', 'cherry', 'cranberry', 'grape', 'grapefruit'])
-test2 = Test(['apple', 'banana', 'cherry', 'grape', 'opals', 'orange'])
-test3 = Test(["apparatus", "appetite", "apple", "appliance"])
-test4 = Test(["apple", "banana", "orange", "peach"])
-test5 = Test(["lemon", "lemongrass", "licorice", "lime", "lychee"])
-test6 = Test(["lime", "limeberry", "lingonberry"])
-test7 = Test(["grape", "grapefruit", "grapes", "grapple"])
-
-# define and execute test suite
-test_suite = [
-    test1,
-    test2,
-    test3,
-    test4,
-    test5,
-    test6,
-    test7,
-]
-
-for index, test in enumerate(test_suite):
-    print()
-    result = test.trie.shortest_prefix_from_array(test.array)
-    print(f'{index + 1}. {test.array}')
-    print(f'   shortest prefix = {result}')
-    print()
-    print("--------------------------------------------------------------")
 
 # Trie.py
 class TrieNode:
@@ -820,3 +822,39 @@ class Trie:
             return self.suggest(s[:-1])
         else:
             return suggestions
+
+# main.py
+from Trie import Trie
+
+# define Test class and instantiate test cases
+class Test:
+    def __init__(self, array = []):
+        self.array = array
+        self.trie = Trie()
+
+test1 = Test(['apple', 'banana', 'cherry', 'cranberry', 'grape', 'grapefruit'])
+test2 = Test(['apple', 'banana', 'cherry', 'grape', 'opals', 'orange'])
+test3 = Test(["apparatus", "appetite", "apple", "appliance"])
+test4 = Test(["apple", "banana", "orange", "peach"])
+test5 = Test(["lemon", "lemongrass", "licorice", "lime", "lychee"])
+test6 = Test(["lime", "limeberry", "lingonberry"])
+test7 = Test(["grape", "grapefruit", "grapes", "grapple"])
+
+# define and execute test suite
+test_suite = [
+    test1,
+    test2,
+    test3,
+    test4,
+    test5,
+    test6,
+    test7,
+]
+
+for index, test in enumerate(test_suite):
+    print()
+    result = test.trie.shortest_prefix_from_array(test.array)
+    print(f'{index + 1}. {test.array}')
+    print(f'   shortest prefix = {result}')
+    print()
+    print("--------------------------------------------------------------")
