@@ -21,18 +21,6 @@
                                                            
 from Trie import Trie
 
-words = ['apple', 'banana', 'cherry', 'cranberry', 'grape', 'grapefruit'] 
-trie = Trie()
-
-# longest prefix
-longest_prefix = trie.longest_prefix_from_array(words)
-print("longest_prefix =", longest_prefix)
-
-# search
-target = "cranberry"
-search_result = trie.search(target)
-print("search found =", search_result)
-
 # define Test class and instantiate test cases
 class Test:
     def __init__(self, array = []):

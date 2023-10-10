@@ -79,12 +79,9 @@ class Trie:
 
             # iteration reaches end of word (*)
             if key == self.end_char:
-                #print("end of word")
                 if current.freq > 1:
-                    #print("append for multiple child")
                     results.append(prefix)
                 else:
-                    #print("append for single child")
                     results.append(prefix[0])
                 
             # iteration reaches node with children > 1
@@ -94,12 +91,9 @@ class Trie:
 
             else:
                 if current.freq > 1:
-                    #print("append for freq > 1")
                     results.append(prefix+key)
-                    #print("continue")
                     continue
                 
-                #print("other recursion call")
                 # recursion call for single child
                 self.shortest_prefix(node, prefix + key, results)
 
@@ -199,4 +193,3 @@ class Trie:
             return self.suggest(s[:-1])
         else:
             return suggestions
-    
