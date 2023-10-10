@@ -24,6 +24,7 @@ test2 = Test(["apple", "orange", "banana", "peach"])
 test3 = Test(["lemon", "lime", "lemongrass", "lychee", "licorice"])
 test4 = Test(["lime", "limeberry", "lingonberry"])
 test5 = Test(["grape", "grapes", "grapefruit", "grapple"])
+test6 = Test(["grape", "grapes", "grapefruit", "grapeseed"])
 
 # define and execute test suite
 test_suite = [
@@ -32,6 +33,7 @@ test_suite = [
     test3,
     test4,
     test5,
+    test6,
 ]
 
 for index, test in enumerate(test_suite):
