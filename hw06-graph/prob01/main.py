@@ -1,9 +1,40 @@
 # HW 6
 # Problem No. 1
 
-# Last Item in Complete Tree
+# Graph - Depth First Search
 # --------------------------
-# Write a function to get the last item in a complete tree.
-# This is easy to do if the complete tree were implemented
-# using arrays.  How would we do this if the tree was 
-# implemented using nodes?
+# Write a depth first search function that accepts a starting vertex 
+# and an ending vertex. If the ending vertex is found, It should also 
+# return the path of the search.
+
+from Graph import AdjacencyMatrixGraph
+
+
+def dfs(start, end):
+
+    # define path array
+    path = []
+
+
+
+
+    # if end is found, return path
+    last_index = len(path) - 1
+    if(path[last_index] == end):
+        return path
+    else:
+        return None
+    
+
+# graph01
+# define undirected graph using adjacency matrix
+labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I"]
+
+g = AdjacencyMatrixGraph(labels)
+g.print_graph()
+
+g.add_edge("A", "B")
+
+g.print_graph()
+
+
