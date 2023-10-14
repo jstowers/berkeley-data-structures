@@ -10,21 +10,7 @@
 from Graph import AdjacencyMatrixGraph
 
 
-def dfs(start, end):
 
-    # define path array
-    path = []
-
-
-
-
-    # if end is found, return path
-    last_index = len(path) - 1
-    if(path[last_index] == end):
-        return path
-    else:
-        return None
-    
 
 # graph01
 # define undirected graph using adjacency matrix
@@ -34,7 +20,19 @@ g = AdjacencyMatrixGraph(labels)
 g.print_graph()
 
 g.add_edge("A", "B")
+g.add_edge("A", "C")
+g.add_edge("A", "D")
+g.add_edge("B", "E")
+g.add_edge("C", "F")
+g.add_edge("C", "D")
+g.add_edge("D", "G")
+g.add_edge("E", "F")
+g.add_edge("E", "H")
+g.add_edge("F", "H")
+g.add_edge("F", "I")
+g.add_edge("G", "I")
 
 g.print_graph()
 
-
+path = g.dfs("A", "H")
+print("path =", path)

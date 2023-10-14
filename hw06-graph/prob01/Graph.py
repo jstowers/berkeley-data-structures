@@ -3,8 +3,8 @@ class AdjacencyMatrixGraph:
     def __init__(self, labels):
         self.labels = labels
         self.node_count = len(self.labels)
-        self.array = self.__create_matrix()
-        self.label_index = self.__create_lable_table()
+        self.matrix = self.__create_matrix()
+        self.label_index = self.__create_label_table()
 
     # create 2D matrix where each vertex has a row and column
     def __create_matrix(self):
@@ -12,18 +12,14 @@ class AdjacencyMatrixGraph:
         return [[None for i in range(cols)] for j in range(rows)]
     
     # create hash table of { label : index }
-    def __create_lable_table(self):
+    def __create_label_table(self):
         ht = {}
 
         # enumerate returns a tuple (index, value)
         for i, label in enumerate(self.labels):
             ht.update({label:i})
 
-        return ht 
-    
-    # returns the index of the label from the labels array
-    def __get_label_index(self, label):
-        return self.labels.index(label)
+        return ht
 
     # add undirected edge to graph
     def add_edge(self, start_label, end_label):
@@ -33,10 +29,46 @@ class AdjacencyMatrixGraph:
         end = self.label_index[end_label]
 
         # define undirected edge
-        self.array[start][end] = True
-        self.array[end][start] = True
-        self.array[start][start] = True
-        self.array[end][end] = True
+        self.matrix[start][end] = True
+        self.matrix[end][start] = True
+        self.matrix[start][start] = True
+        self.matrix[end][end] = True
+
+    def dfs(self, start, end):
+
+        # define path array
+        path = self.depth_first_recursion(start, end, {}, [])
+
+        return path
+
+    def depth_first_recursion(self, start_label, end_label, visited, path):
+
+        # start vertex
+        start_index = self.label_index[start_label]
+        print("start_index =", start_index)
+
+        # end vertex
+        end_index = self.label_index[end_label]
+
+        # add current vertex to visited hash table
+        visited[start_index] = True
+        print("visited =", visited)
+  
+
+
+
+        if start_index == end_index:
+            print("inside IF")
+            return path
+
+        # loop through adjacent vertices
+        for i in range(len(self.matrix)):
+            print(self.matrix[start_index][i])
+            if i not in visited and self.matrix[start_index][i]:
+                path.append(self.labels[i])
+                print("path =", path)
+                return self.depth_first_recursion(self.labels[i], end_label, visited, path)
+
 
 
     # print graph in matrix form
@@ -46,8 +78,8 @@ class AdjacencyMatrixGraph:
         for label in self.labels:
             print(f"{label:^3}", end=" ")
         print()
-        print("----" * (len(self.array) + 1))
-        for r, row in enumerate(self.array):
+        print("----" * (len(self.matrix) + 1))
+        for r, row in enumerate(self.matrix):
             label = self.labels[r]
             print(f"{label:^3}|", end="");
             for col in row:
