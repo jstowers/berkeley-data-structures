@@ -20,3 +20,6 @@ Week 3 - Hash Tables and Sorting
 Week 4 - Linked Lists and Trees
 
 Week 5 - Tree Traversal, Heaps, Tries
+
+Week 6 - Graphs, Dijkstra's Algorithm, Topological Sort
+
