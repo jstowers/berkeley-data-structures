@@ -29,9 +29,23 @@ g.add_edge("F", "I")
 g.add_edge("G", "I")
 
 g.print_graph()
+print()
+
+path5 = g.dfs("A", "D")
+print("A -> D path =", path5)
+print()
 
 path1 = g.dfs("A", "I")
 print("A -> I path =", path1)
+print()
+
+path6 = g.dfs("A", "H")
+print("A -> H path =", path6)
+print()
+
+# different starting vertex
+path3 = g.dfs("F", "B")
+print("F -> B path =", path3)
 print()
 
 # None - "X" does not exist
@@ -39,15 +53,37 @@ path2 = g.dfs("A", "X")
 print("A -> X path =", path2)
 print()
 
-path3 = g.dfs("F", "B")
-print("F -> B path =", path3)
-print()
-
 # None - "Y" does not exist
 path4 = g.dfs("Y", "B")
 print("Y -> B path =", path4)
 print()
 
-path5 = g.dfs("A", "D")
-print("A -> D path =", path5)
+
+# graph02
+labels2 = ["A", "B", "C", "D", "E", "F"]
+
+g2 = AdjacencyMatrixGraph(labels2)
+
+g2.add_edge("A", "B")
+g2.add_edge("A", "D")
+g2.add_edge("B", "C")
+g2.add_edge("B", "F")
+g2.add_edge("C", "D")
+g2.add_edge("C", "F")
+g2.add_edge("D", "A")
+g2.add_edge("D", "E")
+g2.add_edge("E", "F")
+
+g2.print_graph()
+
+g2_path1 = g2.dfs("A", "B")
+print("A -> B path =", g2_path1)
+print()
+
+g2_path2 = g2.dfs("A", "F")
+print("A -> F path =", g2_path2)
+print()
+
+g2_path3 = g2.dfs("D", "B")
+print("D -> B path =", g2_path3)
 print()

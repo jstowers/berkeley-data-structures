@@ -19,7 +19,6 @@ class AdjacencyMatrixGraph:
         for i, label in enumerate(self.labels):
             ht.update({label:i})
 
-        print("ht =", ht)
         return ht
 
     # add undirected edge to graph
@@ -81,21 +80,26 @@ class AdjacencyMatrixGraph:
         # add current vertex to visited hash table
         visited[start_index] = True
 
-        # add label to path
+        # add vertex label to path
         path.append(start_label)
 
         # recursion base case
         if start_index == end_index:
+            print("INSIDE base case: start_label =", start_label)
             return path
 
         # loop through adjacent vertices
         for i in range(len(self.matrix)):
-            #print("start_index = ", start_index, " i =", i)
-            #print("self.matrix[start_index][i] =", self.matrix[start_index][i])
+  
+            # new vertex to traverse
             if i not in visited and self.matrix[start_index][i]:
-                #print("self.labels[i] =", self.labels[i])
-                path.append(self.labels[i])
-                return self.depth_first_recursion(self.labels[i], end_label, visited, path)
+                new_start = self.labels[i]
+                self.depth_first_recursion(new_start, end_label, visited, path)
+
+            # if vertex found, return path up the recursion stack
+            elif path[len(path)-1] == end_label:
+                print("INSIDE elif: start_label =", start_label)
+                return path
 
         return None
 
