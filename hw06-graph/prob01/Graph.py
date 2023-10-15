@@ -15,10 +15,11 @@ class AdjacencyMatrixGraph:
     def __create_label_table(self):
         ht = {}
 
-        # enumerate returns a tuple (index, value)
+        # enumerate returns a tuple: (index, value)
         for i, label in enumerate(self.labels):
             ht.update({label:i})
 
+        print("ht =", ht)
         return ht
 
     # add undirected edge to graph
@@ -36,40 +37,67 @@ class AdjacencyMatrixGraph:
 
     def dfs(self, start, end):
 
-        # define path array
-        path = self.depth_first_recursion(start, end, {}, [])
+        # run depth-first recursion
+        return self.depth_first_recursion(start, end)
+    
+    def check_graph_index(self, label):
 
-        return path
+        if self.label_index.get(label) is None:
+            return None
 
-    def depth_first_recursion(self, start_label, end_label, visited, path):
+        elif self.label_index.get(label) >= 0:
+            return self.label_index.get(label)
+        
+        return None
+        
+    # Depth_first_recursion receives a start label and end label and
+    # recursively traverses the graph searching for the end vertex.
+    #
+    # If the end vertex is found, the function returns a path array [] showing the 
+    # path taken. If the end vertex is not found, the function returns None.
+    def depth_first_recursion(self, start_label, end_label, visited = None, path = None):
+        
+        # check graph for start vertex
+        start_index = self.check_graph_index(start_label)
+        if start_index is None:
+            print("start vertex", start_label, "does not exist in graph.")
+            return None
 
-        # start vertex
-        start_index = self.label_index[start_label]
-        print("start_index =", start_index)
+        # check graph for end vertex
+        end_index = self.check_graph_index(end_label)
+        if end_index is None:
+            print("end vertex", end_label, "does not exist in graph.")
+            return None
 
-        # end vertex
-        end_index = self.label_index[end_label]
+        # initialize visited hash table
+        # { index : True } for each visited vertex 
+        if visited is None:
+            visited = {}
+
+        # initialize path array
+        if path is None:
+            path = []
 
         # add current vertex to visited hash table
         visited[start_index] = True
-        print("visited =", visited)
-  
 
+        # add label to path
+        path.append(start_label)
 
-
+        # recursion base case
         if start_index == end_index:
-            print("inside IF")
             return path
 
         # loop through adjacent vertices
         for i in range(len(self.matrix)):
-            print(self.matrix[start_index][i])
+            #print("start_index = ", start_index, " i =", i)
+            #print("self.matrix[start_index][i] =", self.matrix[start_index][i])
             if i not in visited and self.matrix[start_index][i]:
+                #print("self.labels[i] =", self.labels[i])
                 path.append(self.labels[i])
-                print("path =", path)
                 return self.depth_first_recursion(self.labels[i], end_label, visited, path)
 
-
+        return None
 
     # print graph in matrix form
     def print_graph(self):
@@ -86,10 +114,3 @@ class AdjacencyMatrixGraph:
                 b = " T " if col else "   "
                 print(b, end=" ")
             print()
-
-
-class Vertex:
-    def __init__(self, value):
-        self.value = value
-        self.ad
-    

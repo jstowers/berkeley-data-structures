@@ -9,15 +9,11 @@
 
 from Graph import AdjacencyMatrixGraph
 
-
-
-
 # graph01
 # define undirected graph using adjacency matrix
 labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I"]
 
 g = AdjacencyMatrixGraph(labels)
-g.print_graph()
 
 g.add_edge("A", "B")
 g.add_edge("A", "C")
@@ -34,5 +30,24 @@ g.add_edge("G", "I")
 
 g.print_graph()
 
-path = g.dfs("A", "H")
-print("path =", path)
+path1 = g.dfs("A", "I")
+print("A -> I path =", path1)
+print()
+
+# None - "X" does not exist
+path2 = g.dfs("A", "X")
+print("A -> X path =", path2)
+print()
+
+path3 = g.dfs("F", "B")
+print("F -> B path =", path3)
+print()
+
+# None - "Y" does not exist
+path4 = g.dfs("Y", "B")
+print("Y -> B path =", path4)
+print()
+
+path5 = g.dfs("A", "D")
+print("A -> D path =", path5)
+print()
