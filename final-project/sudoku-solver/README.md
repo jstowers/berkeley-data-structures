@@ -72,6 +72,12 @@ TODO:
 
 ## Questions
 
-1. How do I populate an initial grid with clues?
+1. How do I populate an initial grid with clues?  DONE 10/22/23
 
     r1 = [2, 0, 8, 0, 0, 4, 3, 0, 0]
+
+
+2. How do I start the iteration process?
+
+
+3. How do I create the hash tables?

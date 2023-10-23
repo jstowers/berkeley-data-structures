@@ -2,9 +2,28 @@ from Cell import Cell
 
 class Matrix:
     def __init__(self):
-        self.cols = 9
-        self.rows = 9
-        self.cell_count = self.cols * self.rows
+        self.cols = {}
+        self.col_count = 9
+        self.rows = {
+            0:{
+                1: {
+                    "is_clue": False, 
+                    "is_present": False
+                },
+                2: {
+                    "is_clue": False, 
+                    "is_present": False
+                },
+                3: False,
+                4: False,
+                5: False,
+                6: False,
+                7: False,
+                8: False,
+                9: False,
+        }, 1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}, 7:{}, 8:{}}
+        self.row_count = 9
+        self.cell_count = self.col_count * self.row_count
         self.box_count = 9
         self.matrix = self.__create_matrix()
 
@@ -28,6 +47,14 @@ class Matrix:
                 c.value = rows_array[i][j]
                 c.is_clue = self.check_clue_status(c.value)
                 self.matrix[i][j] = c
+
+                # add clue to hash table
+                if c.value != 0 and c.is_clue:
+                    print("i =", i, "c.value =", c.value, "self.rows[i][c.value] =", self.rows[i][c.value])
+                    self.rows[i][c.value]['is_clue'] = True
+                    self.rows[i][c.value]['is_present'] = True
+
+        print("self.rows =", self.rows)        
         return self.matrix
 
     # check_clue_status returns true if the value is a given clue, 
@@ -45,17 +72,17 @@ class Matrix:
     def __create_matrix(self):
 
         # initialize empty 2D matrix
-        self.matrix = [[0 for j in range(self.cols)] for i in range(self.rows)]
+        return  [[Cell() for j in range(self.col_count)] for i in range(self.row_count)]
 
-        # populate cells from 1 to 81
-        z = 0
-        while z < self.cell_count:
-            for i in range(self.rows):
-                for j in range(self.cols):
-                    self.matrix[i][j] = z+1
-                    z += 1
+        # # populate cells from 1 to 81
+        # z = 0
+        # while z < self.cell_count:
+        #     for i in range(self.rows):
+        #         for j in range(self.cols):
+        #             self.matrix[i][j] = z+1
+        #             z += 1
     
-        return self.matrix
+        # return self.matrix
     
     # traverse takes an i and j value and recursively
     # traverses through the matrix till the end.
