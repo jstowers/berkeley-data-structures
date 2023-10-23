@@ -9,11 +9,18 @@ class Matrix:
         self.matrix = self.__create_matrix()
 
     def create_from_array(self, rows_array):
-        #  initialize 2D matrix with empty Cell()
-        self.matrix = [[Cell() for j in range(self.cols)] for i in range(self.rows)]
-
+        # check for empty array
+        if len(rows_array) == 0:
+            raise Exception("rows array is empty")
+        # check for 9 rows
+        if len(rows_array) != 9:
+            raise Exception("rows array does not contain 9 rows")
+        
         # loop over rows_array
         for i in range(len(rows_array)):
+            # check for 9 values
+            if len(rows_array[i]) != 9:
+                raise Exception("row does not contain 9 values")
             for j in range(len(rows_array[i])):
                 c = Cell()
                 c.i = i
@@ -78,7 +85,12 @@ class Matrix:
             self.traverse(i+1, 0)
 
     def print(self):
+        indices = [0, 1, 2, 3, 4, 5, 6, 7, 8]
         print()
+        print("---------------- j --------------------")
+        print()
+        print(''.join(['{:4}'.format(index) for index in indices]))
+        print("---------------------------------------")
         print('\n'.join([''.join(['{:4}'.format(item.value) for item in row]) 
         for row in self.matrix]))
         print()

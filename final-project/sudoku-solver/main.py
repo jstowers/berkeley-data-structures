@@ -1,10 +1,11 @@
-from Matrix import Matrix
-
-# define initial rows
-# 0 = empty cell
+# Sudoku Solver
 # New York Times - Easy
 # Sunday, October 22, 2023
 
+from Matrix import Matrix
+
+# define rows with given clues
+# empty cell = 0
 r0 = [2, 0, 8, 0, 0, 4, 3, 0, 0]
 r1 = [3, 5, 6, 0, 0, 7, 0, 0, 8]
 r2 = [4, 0, 0, 8, 3, 2, 0, 6, 0]
@@ -24,11 +25,11 @@ m = Matrix()
 # create matrix from rows []
 m.create_from_array(rows)
 
-# print matrix
-m.traverse()
+# traverse matrix
+m.traverse(4,0)
 
 # test coordinates
 print("m[2][2] =", m.matrix[2][2].value)
 
-# test traversal
+# print matrix
 m.print()
