@@ -1,4 +1,6 @@
-# Graph - undirected, implemented with adjacency matrix
+from Queue import Queue
+
+# Graph - directed and undirected, implemented with adjacency matrix
 class AdjacencyMatrixGraph:
     def __init__(self, labels):
         self.labels = labels
@@ -20,6 +22,17 @@ class AdjacencyMatrixGraph:
             ht.update({label:i})
 
         return ht
+    
+    # add directed edge to graph
+    def add_directed_edge(self, start_label, end_label):
+        # get integer index for each vertex
+        start = self.label_index[start_label]
+        end = self.label_index[end_label]
+
+        # define directed edge
+        self.matrix[start][end] = True
+        self.matrix[start][start] = True
+        self.matrix[end][end] = True
 
     # add undirected edge to graph
     def add_edge(self, start_label, end_label):
@@ -33,6 +46,59 @@ class AdjacencyMatrixGraph:
         self.matrix[end][start] = True
         self.matrix[start][start] = True
         self.matrix[end][end] = True
+
+    def bfs(self, start, end):
+
+        return self.breadth_first_traverse(start, end)
+    
+
+    # Breadth_first_traverse receives a start label and end label and
+    # traverses the graph searching for the end vertex.
+    #
+    # 
+    def breadth_first_traverse(self, start_label, end_label):
+
+        # check graph for start vertex
+        start_index = self.check_graph_index(start_label)
+        if start_index is None:
+            print("start vertex", start_label, "does not exist in graph.")
+            return None
+
+        # check graph for end vertex
+        end_index = self.check_graph_index(end_label)
+        if end_index is None:
+            print("end vertex", end_label, "does not exist in graph.")
+            return None
+        
+        # initialize queue
+        q = Queue()
+
+        # initialize visited hash table
+        visited = {}
+
+        # add current vertex to queue
+        q.enqueue(start_index)
+
+        # add current vertex to visited
+        visited[start_index] = True
+
+        # while queue is not empty
+        while not q.is_empty():
+            current = q.dequeue()
+
+            if current not in visited:
+                visited[current] = True
+
+                # loop through adjacent vertices of current vertex
+                for i in range(len(self.array)):
+                    print("current =", current, "  i =", i, "self.array[current][i] =", self.array[current][i])
+                    # if adjacent vertex is True, add to queue
+                    if self.array[current][i]:
+                        q.enqueue(i)
+        
+
+
+
 
     def dfs(self, start, end):
 

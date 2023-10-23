@@ -11,15 +11,23 @@
 
 ## Creating an Undirected Graph
 
-An undirected graph will use an __adjacency matrix__.  This is a two-dimensional array where each vertex has a corresponding row and column.  The vertex itself, and its adjacent vertices,
+You can create an undirected graph using one of two data structures:
+
+1.  adjacency matrix
+2.  adjacency list
+
+### Adjacency Matrix
+
+An __adjacency matrix__ is a two-dimensional array where each vertex has a corresponding row and column.  The vertex itself, and its adjacent vertices,
 are marked with an `x`.
 
-  A ------- B ------- C
-   \         \       /
-    \         \     /
-     \         \   /
-      \         \ /
-       D -- E -- F
+    A ------- B ------- C
+    \         \       /
+     \         \     /
+      \         \   /
+       \         \ /
+        D -- E -- F
+
 
         A   B   C   D   E   F
     A   x   x       x
@@ -29,7 +37,7 @@ are marked with an `x`.
     E               x   x   x
     F       x   x       x   x
 
-    The matrix is symmetrical along the downward diagnoal from [A,A] to [F, F].
+    For undirected graphs, the matrix is symmetrical along the downward diagonal from [A,A] to [F, F].
 
 
 ## DFS Algorithm

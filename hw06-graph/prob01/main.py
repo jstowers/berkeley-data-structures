@@ -87,3 +87,27 @@ print()
 g2_path3 = g2.dfs("D", "B")
 print("D -> B path =", g2_path3)
 print()
+
+
+# graph03
+labels3 = ["A", "B", "C", "D"]
+
+g3 = AdjacencyMatrixGraph(labels3)
+
+g3.add_edge("A", "B")
+g3.add_edge("B", "C")
+g3.add_edge("B", "D")
+
+g3.print_graph()
+
+g3_path1 = g3.dfs("A", "B")
+print("A -> B path =", g3_path1)
+print()
+
+g3_path2 = g2.dfs("A", "C")
+print("A -> C path =", g3_path2)
+print()
+
+g3_path3 = g2.dfs("A", "D")
+print("A -> D path =", g3_path3)
+print()
