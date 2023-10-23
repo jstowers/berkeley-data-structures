@@ -11,17 +11,14 @@ class Matrix:
     def create_from_array(self, rows_array):
         #  initialize 2D matrix with empty Cell()
         self.matrix = [[Cell() for j in range(self.cols)] for i in range(self.rows)]
-        print("self.matrix =", self.matrix)
 
         # loop over rows_array
         for i in range(len(rows_array)):
             for j in range(len(rows_array[i])):
-                print("rows_array[i][j] =", rows_array[i][j])
-
                 c = Cell()
                 c.i = i
                 c.j = j
-                c.value = rows_array[i][j],
+                c.value = rows_array[i][j]
                 c.is_clue = self.check_clue_status(c.value)
                 self.matrix[i][j] = c
         return self.matrix
@@ -32,6 +29,9 @@ class Matrix:
         if value != 0:
             return True
         return False
+    
+    def value(self, i, j):
+        return self.matrix[i][j]
     
     # __create_matrix creates a 9 x 9 matrix array.  It fills each
     # cell with an integer from 1 to 81.
@@ -79,7 +79,7 @@ class Matrix:
 
     def print(self):
         print()
-        print('\n'.join([''.join(['{:4}'.format(item) for item in row]) 
+        print('\n'.join([''.join(['{:4}'.format(item.value) for item in row]) 
         for row in self.matrix]))
         print()
 

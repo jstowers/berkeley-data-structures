@@ -28,7 +28,7 @@ m.create_from_array(rows)
 m.traverse()
 
 # test coordinates
-
+print("m[2][2] =", m.matrix[2][2].value)
 
 # test traversal
-
+m.print()
