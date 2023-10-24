@@ -1,31 +1,40 @@
 from Cell import Cell
 
 class Matrix:
+
     def __init__(self):
-        self.cols = {}
+        # standard 9 x 9 sudoku grid
         self.col_count = 9
-        self.rows = {
-            0:{
-                1: {
-                    "is_clue": False, 
-                    "is_present": False
-                },
-                2: {
-                    "is_clue": False, 
-                    "is_present": False
-                },
-                3: False,
-                4: False,
-                5: False,
-                6: False,
-                7: False,
-                8: False,
-                9: False,
-        }, 1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}, 7:{}, 8:{}}
         self.row_count = 9
-        self.cell_count = self.col_count * self.row_count
         self.box_count = 9
+        self.cell_count = self.col_count * self.row_count
+        
+        # ht for cols and rows
+        self.cols = {0:{}, 1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}, 7:{}, 8:{}}
+        self.rows = {0:{}, 1:{}, 2:{}, 3:{}, 4:{}, 5:{}, 6:{}, 7:{}, 8:{}}
+
+        # update rows {} to add nested hash tables for values 1 -> 9
+        self.__update_rows()
+
+        # update cols {} to add nested hash tables for values 1 -> 9
+        self.__update_cols()
+  
+        # 2D 9x9 matrix
         self.matrix = self.__create_matrix()
+
+
+    # __update_rows creates a nested hash table {} to hold values from 1 -> 9
+    def __update_rows(self):
+
+        for key in self.rows:
+            index = 0 
+            while index < self.row_count:
+                if (index + 1) not in self.rows[key]:
+                    self.rows[key][index + 1] = {
+                        "is_clue": False,
+                        "is_present": False
+                    }
+                index += 1
 
     def create_from_array(self, rows_array):
         # check for empty array
@@ -40,6 +49,7 @@ class Matrix:
             # check for 9 values
             if len(rows_array[i]) != 9:
                 raise Exception("row does not contain 9 values")
+            
             for j in range(len(rows_array[i])):
                 c = Cell()
                 c.i = i
@@ -48,14 +58,10 @@ class Matrix:
                 c.is_clue = self.check_clue_status(c.value)
                 self.matrix[i][j] = c
 
-                # add clue to hash table
+                # if clue, update booleans in rows {}
                 if c.value != 0 and c.is_clue:
-                    print("i =", i, "c.value =", c.value, "self.rows[i][c.value] =", self.rows[i][c.value])
                     self.rows[i][c.value]['is_clue'] = True
                     self.rows[i][c.value]['is_present'] = True
-
-        print("self.rows =", self.rows)        
-        return self.matrix
 
     # check_clue_status returns true if the value is a given clue, 
     # false if it is not.
@@ -67,22 +73,11 @@ class Matrix:
     def value(self, i, j):
         return self.matrix[i][j]
     
-    # __create_matrix creates a 9 x 9 matrix array.  It fills each
-    # cell with an integer from 1 to 81.
+    # __create_matrix creates a 9 x 9 matrix with empty Cell() objects
     def __create_matrix(self):
 
         # initialize empty 2D matrix
         return  [[Cell() for j in range(self.col_count)] for i in range(self.row_count)]
-
-        # # populate cells from 1 to 81
-        # z = 0
-        # while z < self.cell_count:
-        #     for i in range(self.rows):
-        #         for j in range(self.cols):
-        #             self.matrix[i][j] = z+1
-        #             z += 1
-    
-        # return self.matrix
     
     # traverse takes an i and j value and recursively
     # traverses through the matrix till the end.
@@ -97,18 +92,18 @@ class Matrix:
             j = 0
 
         # base case: bottom-right corner of matrix
-        if i == self.rows and j == self.cols:
+        if i == self.row_count and j == self.col_count:
             return
         
         # print / process current cell
         print("i =", i, " j =", j, " [", i, "][", j, "] =", self.matrix[i][j].value)
 
         # traverse current row, column by column
-        if j < self.rows - 1:
+        if j < self.row_count - 1:
             self.traverse(i, j+1)
         
         # if last column reached, move to next row
-        elif i < self.cols - 1:
+        elif i < self.col_count - 1:
             self.traverse(i+1, 0)
 
     def print(self):

@@ -33,3 +33,6 @@ print("m[2][2] =", m.matrix[2][2].value)
 
 # print matrix
 m.print()
+
+# print rows ht
+print("rows =", m.rows)
