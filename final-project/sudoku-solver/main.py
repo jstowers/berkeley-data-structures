@@ -30,9 +30,18 @@ m.traverse(4,0)
 
 # test coordinates
 print("m[2][2] =", m.matrix[2][2].value)
+print("m[2][2] =", m.value(2,2))
 
 # print matrix
 m.print()
 
 # print rows ht
 print("rows =", m.rows)
+
+m.print_rows()
+
+# print cols ht
+
+
+# print box ht
+

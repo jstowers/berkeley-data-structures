@@ -1,5 +1,7 @@
 from Cell import Cell
 
+import json
+
 class Matrix:
 
     def __init__(self):
@@ -17,7 +19,7 @@ class Matrix:
         self.__update_rows()
 
         # update cols {} to add nested hash tables for values 1 -> 9
-        self.__update_cols()
+        #self.__update_cols()
   
         # 2D 9x9 matrix
         self.matrix = self.__create_matrix()
@@ -71,7 +73,7 @@ class Matrix:
         return False
     
     def value(self, i, j):
-        return self.matrix[i][j]
+        return self.matrix[i][j].value
     
     # __create_matrix creates a 9 x 9 matrix with empty Cell() objects
     def __create_matrix(self):
@@ -96,7 +98,7 @@ class Matrix:
             return
         
         # print / process current cell
-        print("i =", i, " j =", j, " [", i, "][", j, "] =", self.matrix[i][j].value)
+        # print("i =", i, " j =", j, " [", i, "][", j, "] =", self.matrix[i][j].value)
 
         # traverse current row, column by column
         if j < self.row_count - 1:
@@ -109,12 +111,14 @@ class Matrix:
     def print(self):
         indices = [0, 1, 2, 3, 4, 5, 6, 7, 8]
         print()
-        print("---------------- j --------------------")
-        print()
+        print("|----------------- j -----------------|")
+        print("|                                     |")
         print(''.join(['{:4}'.format(index) for index in indices]))
-        print("---------------------------------------")
+        print("=======================================")
         print('\n'.join([''.join(['{:4}'.format(item.value) for item in row]) 
         for row in self.matrix]))
         print()
 
-
+    # pretty print rows ht in json format
+    def print_rows(self):
+       print ("rows =\n", json.dumps(self.rows, indent = 4))
