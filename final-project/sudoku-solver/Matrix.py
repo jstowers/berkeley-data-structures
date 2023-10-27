@@ -17,39 +17,25 @@ class Matrix:
         self.boxes = {"A":{}, "B":{}, "C":{}, "D":{}, "E":{}, "F":{}, "G":{}, "H":{}, "I":{}}
 
         # update rows {} to add nested hash tables for values 1 -> 9
-        self.__update_rows()
+        self.__update_ht(self.rows)
 
         # update cols {} to add nested hash tables for values 1 -> 9
-        # TODO
-        # self.__update_cols()
+        self.__update_ht(self.cols)
 
         # update boxes {} to add nested hash tables for values 1 -> 9
-        self.__update_boxes()
+        self.__update_ht(self.boxes)
   
         # 2D 9x9 matrix
         self.matrix = self.__create_matrix()
 
-    # Update_rows creates a nested hash table {} for each row 
-    # to hold values from 1 -> 9.
-    def __update_rows(self):
-        for key in self.rows:
+    # Update_ht takes a hash table for rows, cols, or boxes and adds
+    # a nested hash table to store values 1 -> 9
+    def __update_ht(self, ht):
+        for key in ht:
             index = 0 
             while index < self.row_count:
-                if (index + 1) not in self.rows[key]:
-                    self.rows[key][index + 1] = {
-                        "is_clue": False,
-                        "is_present": False
-                    }
-                index += 1
-
-    # Update_boxes creates a nested hash table {} for each box 
-    # to hold values from 1 -> 9.
-    def __update_boxes(self):
-        for key in self.boxes:
-            index = 0
-            while index < self.row_count:
-                if (index + 1) not in self.boxes[key]:
-                             self.boxes[key][index + 1] = {
+                if (index + 1) not in ht[key]:
+                    ht[key][index + 1] = {
                         "is_clue": False,
                         "is_present": False
                     }
@@ -85,13 +71,15 @@ class Matrix:
                 # assign Cell to matrix
                 self.matrix[i][j] = c
 
-                # if value is a clue, update booleans
+                # if value is a clue, update booleans in hash tables
                 if c.value != 0 and c.is_clue:
                     # update rows {}
                     self.rows[i][c.value]['is_clue'] = True
                     self.rows[i][c.value]['is_present'] = True
 
                     # update cols {}
+                    self.cols[j][c.value]['is_clue'] = True
+                    self.cols[j][c.value]['is_present'] = True
 
                     # update boxes {}
                     self.boxes[c.box_value][c.value]['is_clue'] = True
