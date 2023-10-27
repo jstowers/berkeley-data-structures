@@ -4,8 +4,8 @@
 
 from Matrix import Matrix
 
-# define rows with given clues
-# empty cell = 0
+# define each row with the given clues
+# empty cells = 0
 r0 = [2, 0, 8, 0, 0, 4, 3, 0, 0]
 r1 = [3, 5, 6, 0, 0, 7, 0, 0, 8]
 r2 = [4, 0, 0, 8, 3, 2, 0, 6, 0]
@@ -28,10 +28,6 @@ m.create_from_array(rows)
 # traverse matrix
 m.traverse(0,0)
 
-# test coordinates
-#print("m[2][2] =", m.matrix[2][2].value)
-#print("m[2][2] =", m.value(2,2))
-
 # print matrix
 m.print()
 
@@ -43,9 +39,3 @@ m.pretty_print(m.cols, "cols")
 
 # print boxes ht
 m.pretty_print(m.boxes, "boxes")
-
-# print cols ht
-
-
-# print box ht
-
