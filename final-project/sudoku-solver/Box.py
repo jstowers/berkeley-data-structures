@@ -6,8 +6,10 @@ class Box:
         self.j_hi = None
         self.ht = self.__create_ht()
 
+    # creates a ht by Box value 
+    # { A: {1: Cell}}
     def __create_ht(self):
-        return 
+        return
     
     # Get_box_value receives a Cell i and j values 
     # and returns the Box value
@@ -16,7 +18,3 @@ class Box:
         j = cell.j
 
         return self.ht[i][j]
-
-
-# TODO
-    

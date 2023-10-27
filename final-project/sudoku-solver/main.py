@@ -26,19 +26,20 @@ m = Matrix()
 m.create_from_array(rows)
 
 # traverse matrix
-m.traverse(4,0)
+m.traverse(0,0)
 
 # test coordinates
-print("m[2][2] =", m.matrix[2][2].value)
-print("m[2][2] =", m.value(2,2))
+#print("m[2][2] =", m.matrix[2][2].value)
+#print("m[2][2] =", m.value(2,2))
 
 # print matrix
 m.print()
 
 # print rows ht
-print("rows =", m.rows)
+m.pretty_print(m.rows, "rows")
 
-m.print_rows()
+# print boxes ht
+m.pretty_print(m.boxes, "boxes")
 
 # print cols ht
 
