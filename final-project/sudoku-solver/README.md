@@ -80,4 +80,169 @@ TODO:
 2. How do I start the iteration process?
 
 
-3. How do I create the hash tables?
+3. How do I create the hash tables?  DONE 10/23/23
+
+--- 
+
+Wednesday, October 25, 2023
+8:30 pm CDT
+flying to Albuquerque
+
+TODO:
+
+1. Create 9 boxes, A - I, with range values for the rows and columns
+
+        Box A                   Box B                   Box C
+                 j                       j                      j
+        -------------------     -------------------     -------------------
+        | 0,0   0,1   0,2 |     | 0,3   0,4   0,5 |     | 0,6   0,7   0,8 |
+      i | 1,0   1,1   1,2 |     | 1,3   1,4   1,5 |     | 1,6   1,7   1,8 |
+        | 2,0   2,1   2,2 |     | 2,3   2,4   2,5 |     | 2,6   2,7   2,8 |
+        -------------------     -------------------     -------------------
+
+    Box   i_lo   i_hi   j_lo   j_hi
+    -------------------------------
+    A     0      2      0      2
+    B     0      2      3      5
+    C     0      2      6      8
+    D     3      5      0      2
+    E     3      5      3      5
+
+    NOTE: all brackets are inclusive values
+
+    [0, 2] : [0, 2] => A 
+             [3, 5] => B
+             [6, 8] => C
+
+
+
+    [3, 5] : 
+
+
+    Now, what if I shorten the structure to just the first value and
+    use a comparison.  In order for this to work, I have to know the current comparison value and the next.
+
+    0:
+        0:  A
+        3:  B       >= 3 and < 6 (the next key)
+        6:  C
+
+    3:
+        0:  D
+        3:  E
+        6:  F
+
+    6:
+        0   G
+        3   H
+        6   I
+
+    
+
+
+
+
+
+
+
+
+    Box A       i <= 2 AND j <=2
+
+    Box B       i <= 2 AND j > 2 AND j <= 5
+
+    Box C       i <= 2 AND j > 5
+
+    Box D       i > 2 AND i <= 5 AND j <= 2
+
+    Box E       i > 2 AND i <= 5 AND j > 2 AND j <= 5
+
+    Box F       i > 2 AND i <= 5 AND j > 5
+
+    Box G       i > 5 AND j <= 2
+
+    Box H       i > 5 AND j > 2 AND j <= 5
+
+    BOX I       i > 5 AND j > 5
+
+#
+def getBox(cell):
+    i = cell.i
+    j = cell.j
+
+    return box_ht[i][j]
+
+
+ex) Cell(3, 3, 8, True)
+
+    What if I have a ht or array with lo and hi values?
+
+    i = {
+        0: ["A", "B", "C"]
+        1: A, B, C
+        2: A, B, C
+        3: D, E, F
+        4: D, E, F
+        5: D, E, F
+        6: G, H, I
+        7: G, H, I
+        8: G, H, I
+    }
+
+    j = {
+        0: A, D, G
+        1: A, D, G
+        2: A, D, G
+        3: B, E, H
+        4: B, E, H
+        5: B, E, H
+        6: C, F, I
+        7: C, F, I
+        8: C, F, I
+    }
+
+    What if I generate a HT of the Boxes based on coordinates
+
+    {
+        0: {
+            0: A
+            1: A
+            2: A
+            3: B
+            4:
+        }
+    }
+
+
+    What Box is Cell(3, 3) in?
+
+        i =  D, E, F
+        j =  B, E, H
+ 
+    The only Box that fits is E.  So how do I pick that off quickly.
+
+
+
+
+    box_range = { 
+
+        2: 
+
+
+
+        A : {
+            i_lo: 0,
+            i_hi: 2,
+            j_lo: 0,
+            j_hi: 2
+        } 
+
+
+    }
+
+
+
+
+
+2. I need to write a function that receives a Cell and determines what Box it is in.  From there, I need to have a hash table of Cells within the Box.
+
+3.  
