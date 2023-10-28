@@ -157,7 +157,17 @@ class Matrix:
             elif direction == "backward":
                 self.backtrack(i, j - 1, direction)
 
-        temp_value = 1
+        else:
+            if cell.value == 0:
+                temp_value = 1
+            else:
+                current = cell.value
+                current_box = cell.box_value
+                self.rows[i][current]["is_present"] = False
+                self.cols[j][current]["is_present"] = False
+                self.boxes[current_box][current]["is_present"] = False
+                temp_value = current + 1
+
 
         ## maybe just do one while loop
         while temp_value <= 9:
@@ -196,6 +206,7 @@ class Matrix:
         # 1. Assign value
         if temp_value <= 9:
             cell.value = temp_value
+            current_box = cell.box_value
             #print("i =", i, "j =", j, "temp_value =", temp_value)
 
             self.rows[i][temp_value]["is_present"] = True
@@ -215,7 +226,14 @@ class Matrix:
         # TODO: somehow we need to revert the is_present properties
         # when we backtrack.
         else:
+            cell.value = 0
+            current_box = cell.box_value
+            self.rows[i][temp_value - 1]["is_present"] = False
+            self.cols[j][temp_value - 1]["is_present"] = False
+            self.boxes[current_box][temp_value - 1]["is_present"] = False
+
             self.print()
+
             if j < 0:
                 self.backtrack(i-1, 8, "backward")
             else:
