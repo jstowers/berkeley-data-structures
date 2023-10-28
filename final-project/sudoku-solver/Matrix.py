@@ -133,9 +133,58 @@ class Matrix:
         # initialize empty 2D matrix
         return  [[Cell() for j in range(self.col_count)] for i in range(self.row_count)]
     
+    # solve starts the matrix traversal and processing
+    def solve(self):
+        # initialize top-left cell in grid
+        cell = self.matrix[0][0]
+
+        # initialize forward traversal
+        direction = "forward"
+        
+        self.process_cell(cell, direction)
+           
+
+    # Process_cell applies the sudoku rules by row, column,
+    # and box to find a possible correct value for that cell.
+    def process_cell(self, cell, direction):
+        i = cell.i
+        j = cell.j
+
+        # skip cell if it is a clue
+        if cell.is_clue:
+            if direction == "forward":
+                self.traverse(i, j + 1, direction)
+            elif direction == "backward":
+                self.backtrack(i, j - 1, direction)
+
+        temp_value = 1
+
+        # does row[i] have temp_value?
+        while self.rows[i][temp_value].is_present == True:
+            temp_value += 1
+        
+        # does col[j] have temp value?
+        while self.cols[j][temp_value].is_present == True:
+            temp_value += 1
+
+        # does box holding [i][j] have temp_value?
+        current_box = cell.box_value
+        while self.boxes[current_box][temp_value].is_present == True:
+            temp_value += 1
+        
+        # 1. Assign value
+        if temp_value <= 9:
+            cell.value = temp_value
+            self.print()
+            self.traverse(i, j+1, "forward")
+      
+        # 2. Backtrack
+        else:
+            self.backtrack(i, j-1, "backward")
+
     # Backtrack takes an i and j value and recursively
     # backtracks through the matrix until the beginning.
-    def backtrack(self, i = None, j = None):
+    def backtrack(self, i = None, j = None, direction = None):
         # initialize i value
         if i == None:
             i = 8
@@ -143,6 +192,10 @@ class Matrix:
         # initialize j value
         if j == None:
             j = 8
+
+        # initialize direction
+        if direction == None:
+            direction = "backward"
 
         # check for i values in range
         if i < 0 or i > 8:
@@ -154,6 +207,8 @@ class Matrix:
 
         # print / process current cell
         # print("i =", i, " j =", j, " [", i, "][", j, "] =", self.matrix[i][j].value)
+        cell = self.matrix[i][j]
+        self.process_cell(cell, direction)
 
         # base case: upper-left corner of matrix
         if i == 0 and j == 0:
@@ -161,17 +216,15 @@ class Matrix:
         
         # backtrack current row, column by column
         if j > 0:
-            #print("inside if")
-            self.backtrack(i, j-1)
+            self.backtrack(i, j-1, direction)
         
         # if first column reached, move up to next row
         elif i > 0:
-            #print("inside elif")
-            self.backtrack(i-1, 8)
+            self.backtrack(i-1, 8, direction)
 
     # traverse takes an i and j value and recursively
     # traverses forward through the matrix until the end.
-    def traverse(self, i = None, j = None):
+    def traverse(self, i = None, j = None, direction = None):
 
         # initialize i value
         if i == None:
@@ -180,6 +233,10 @@ class Matrix:
         # initialize j value
         if j == None:
             j = 0
+
+        # initialize direction
+        if direction == None:
+            direction = "forward"
         
         # check for i values in range
         if i < 0 or i > 8:
@@ -194,15 +251,17 @@ class Matrix:
             return
         
         # print / process current cell
-        # print("i =", i, " j =", j, " [", i, "][", j, "] =", self.matrix[i][j].value)
+        cell = self.matrix[i][j]
+        print("i =", i, " j =", j, " [", i, "][", j, "] =", cell.value)
+        self.process_cell(cell, direction)
 
         # traverse current row, column by column
         if j < self.row_count - 1:
-            self.traverse(i, j+1)
+            self.traverse(i, j+1, direction)
         
         # if last column reached, move to next row
         elif i < self.col_count - 1:
-            self.traverse(i+1, 0)
+            self.traverse(i+1, 0, direction)
 
     def print(self):
         indices = [0, 1, 2, 3, 4, 5, 6, 7, 8]

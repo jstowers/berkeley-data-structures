@@ -247,6 +247,8 @@ The Cell object has a property called `box_value` that stores the Box value.
 I also created a boxes hash table to store the values 1 -> 9 for each Box A -> I.
 
 
+
+
 # Backtracking Algorithm
 
 1. Start at cell in upper left corner, i = 0, j = 0
@@ -294,7 +296,7 @@ I also created a boxes hash table to store the values 1 -> 9 for each Box A -> I
         # 2. Backtrack
         # temp_value == 10
         # indicates a violation and need to backtrack
-            traverse(i, j-1)
+            backtrack(i, j-1)
 
 
 
