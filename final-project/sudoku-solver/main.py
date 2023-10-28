@@ -35,7 +35,7 @@ m.create_from_array(rows)
 m.print()
 
 # print rows ht
-#m.pretty_print(m.rows, "rows")
+m.pretty_print(m.rows, "rows")
 
 # print cols ht
 #m.pretty_print(m.cols, "cols")
