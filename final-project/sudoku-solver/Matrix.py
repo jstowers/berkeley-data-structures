@@ -133,8 +133,44 @@ class Matrix:
         # initialize empty 2D matrix
         return  [[Cell() for j in range(self.col_count)] for i in range(self.row_count)]
     
+    # Backtrack takes an i and j value and recursively
+    # backtracks through the matrix until the beginning.
+    def backtrack(self, i = None, j = None):
+        # initialize i value
+        if i == None:
+            i = 8
+        
+        # initialize j value
+        if j == None:
+            j = 8
+
+        # check for i values in range
+        if i < 0 or i > 8:
+            raise Exception("i value is out of range")
+        
+        # check for j values in range
+        if j < 0 or j > 8:
+            raise Exception("j value is out of range")
+
+        # print / process current cell
+        # print("i =", i, " j =", j, " [", i, "][", j, "] =", self.matrix[i][j].value)
+
+        # base case: upper-left corner of matrix
+        if i == 0 and j == 0:
+            return
+        
+        # backtrack current row, column by column
+        if j > 0:
+            #print("inside if")
+            self.backtrack(i, j-1)
+        
+        # if first column reached, move up to next row
+        elif i > 0:
+            #print("inside elif")
+            self.backtrack(i-1, 8)
+
     # traverse takes an i and j value and recursively
-    # traverses through the matrix until the end.
+    # traverses forward through the matrix until the end.
     def traverse(self, i = None, j = None):
 
         # initialize i value
@@ -144,6 +180,14 @@ class Matrix:
         # initialize j value
         if j == None:
             j = 0
+        
+        # check for i values in range
+        if i < 0 or i > 8:
+            raise Exception("i value is out of range")
+        
+        # check for j values in range
+        if j < 0 or j > 8:
+            raise Exception("j value is out of range")
 
         # base case: bottom-right corner of matrix
         if i == self.row_count and j == self.col_count:

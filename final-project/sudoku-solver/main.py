@@ -26,7 +26,10 @@ m = Matrix()
 m.create_from_array(rows)
 
 # traverse matrix
-m.traverse(0,0)
+# m.traverse(0,0)
+
+# backtrack matrix
+m.backtrack(8,8)
 
 # print matrix
 m.print()

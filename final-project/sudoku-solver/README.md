@@ -240,9 +240,81 @@ ex) Cell(3, 3, 8, True)
     }
 
 
+2. I need to write a function that receives a Cell and determines what Box it is in.  From there, I need to have a hash table of Cells within the Box. => DONE!
+
+The Cell object has a property called `box_value` that stores the Box value.
+
+I also created a boxes hash table to store the values 1 -> 9 for each Box A -> I.
+
+
+# Backtracking Algorithm
+
+1. Start at cell in upper left corner, i = 0, j = 0
+
+2. Does that cell have a clue?
+   
+    cell = self.matrix[i][j].is_clue
+
+    YES: 
+        # forward
+        skip cell and go forward to next cell
+            traverse(i, j + 1)
+
+        # backtrack
+        skip cell and go backward to previous cell
+            traverse(i, j - 1)
+
+    NO: set temp_value = 1
+
+        # does row[i] have temp_value?
+        while self.rows[i][temp_value][is_present] == True:
+
+            YES: increment temp_value by 1
+            temp_value += 1
+
+        # does col[j] have temp value?
+        while sels.cols[j][temp_value][is_present] == True:
+
+                YES: increment temp_value by 1
+                temp_value += 1
+
+        # does box holding [i][j] have temp_value?
+        current_box = matrix[i][j].box_value
+        while self.boxes[current_box][temp_value][is_present] == True:
+                
+                YES: increment temp_value by 1
+                temp_value += 1
+
+        # 1. Assign Value
+        # temp_value <= 9 so assign cell the temp value
+        if temp_value <= 9
+            self.matrix[i][j].value = temp_value
+            traverse(i, j+1)
+
+        # 2. Backtrack
+        # temp_value == 10
+        # indicates a violation and need to backtrack
+            traverse(i, j-1)
 
 
 
-2. I need to write a function that receives a Cell and determines what Box it is in.  From there, I need to have a hash table of Cells within the Box.
 
-3.  
+
+In col 7, I have my first conflict:
+
+    temp = 7, 9
+
+    col = x7, x8, x9
+
+So I have to go backward and change 1 or more of
+my guesses:
+            Can Be    Guess1    Guess2
+    col1     1, 7       1         7
+    col3     1, 5, 9    5
+    col4     1, 6       6
+    col7     1          ?         1
+
+
+
+
+
