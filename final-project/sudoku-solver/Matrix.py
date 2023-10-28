@@ -85,7 +85,6 @@ class Matrix:
                     self.boxes[c.box_value][c.value]['is_clue'] = True
                     self.boxes[c.box_value][c.value]['is_present'] = True
 
-
     # Check_clue_status returns true if the value is a given clue, 
     # false if it is not.
     def check_clue_status(self, value):
@@ -143,7 +142,6 @@ class Matrix:
         
         self.process_cell(cell, direction)
            
-
     # Process_cell applies the sudoku rules by row, column,
     # and box to find a possible correct value for that cell.
     def process_cell(self, cell, direction):
@@ -153,7 +151,7 @@ class Matrix:
 
         # skip cell if it is a clue
         if cell.is_clue:
-            print("skipping - cell is clue")
+            #print("skipping - cell is clue")
             if direction == "forward":
                 self.traverse(i, j + 1, direction)
             elif direction == "backward":
@@ -161,29 +159,47 @@ class Matrix:
 
         temp_value = 1
 
-        # does row[i] have temp_value?
-        while self.rows[i][temp_value]["is_present"] == True:
-            print("row temp_value =", temp_value)
-            temp_value += 1
-        
-        # does col[j] have temp value?
-        while self.cols[j][temp_value]["is_present"] == True:
-            print("col temp_value =", temp_value)
-            temp_value += 1
+        ## maybe just do one while loop
+        while temp_value <= 9:
+            current_box = cell.box_value
+            if self.rows[i][temp_value]["is_present"] == True:
+                print("row has temp_value ", temp_value)
+                temp_value += 1
+            elif self.cols[j][temp_value]["is_present"] == True:
+                print("col has temp_value ", temp_value)
+                temp_value += 1
+            elif self.boxes[current_box][temp_value]["is_present"] == True:
+                print("box has temp_value ", temp_value)
+                temp_value += 1
+            # if none of the three have it, exit the loop
+            else:
+                print("temp_value ", temp_value, "not in row, col, or box")
+                break
 
-        # does box holding [i][j] have temp_value?
-        current_box = cell.box_value
-        print("current_box =", current_box)
-        while self.boxes[current_box][temp_value]["is_present"] == True:
-            temp_value += 1
+        # # does row[i] have temp_value?
+        # while temp_value <= 9 and self.rows[i][temp_value]["is_present"] == True:
+        #     print("row temp_value =", temp_value)
+        #     temp_value += 1
         
+        # # does col[j] have temp value?
+        # while temp_value <= 9 and self.cols[j][temp_value]["is_present"] == True:
+        #     print("col temp_value =", temp_value)
+        #     temp_value += 1
+
+        # # does box holding [i][j] have temp_value?
+        # current_box = cell.box_value
+        # while temp_value <= 9 and self.boxes[current_box][temp_value]["is_present"] == True:
+        #     print("boxes temp_value =", temp_value)
+        #     temp_value += 1
+        
+        print("temp_value before assignment =", temp_value)
         # 1. Assign value
         if temp_value <= 9:
             cell.value = temp_value
-            print("i =", i, "j =", j, "temp_value =", temp_value)
+            #print("i =", i, "j =", j, "temp_value =", temp_value)
 
             self.rows[i][temp_value]["is_present"] = True
-            print("self.rows[i][temp_value] =", self.rows[i][temp_value])
+            #print("self.rows[i][temp_value] =", self.rows[i][temp_value])
 
             self.cols[j][temp_value]["is_present"] = True
             self.boxes[current_box][temp_value]["is_present"] = True
@@ -196,7 +212,10 @@ class Matrix:
                 self.traverse(i, j+1, "forward")
       
         # 2. Backtrack
+        # TODO: somehow we need to revert the is_present properties
+        # when we backtrack.
         else:
+            self.print()
             if j < 0:
                 self.backtrack(i-1, 8, "backward")
             else:
