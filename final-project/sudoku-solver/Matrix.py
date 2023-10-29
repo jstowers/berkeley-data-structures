@@ -221,7 +221,8 @@ class Matrix:
 
             self.print()
 
-            if j > 8:
+            print("inside if temp_value <= 9: j =", j)
+            if j >= 8:
                 self.traverse(i+1, 0, "forward")
             else:
                 self.traverse(i, j+1, "forward")
