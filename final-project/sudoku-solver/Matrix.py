@@ -153,9 +153,12 @@ class Matrix:
         if cell.is_clue:
             #print("skipping - cell is clue")
             if direction == "forward":
-                self.traverse(i, j + 1, direction)
+                if j >= 8:
+                    self.traverse(i+1, 0, "forward")
+                else:
+                    self.traverse(i, j+1, direction)
             elif direction == "backward":
-                self.backtrack(i, j - 1, direction)
+                self.backtrack(i, j-1, direction)
 
         else:
             if cell.value == 0:
