@@ -9,6 +9,7 @@ class Matrix:
         self.row_count = 9
         self.col_count = 9
         self.box_count = 9
+
         self.cell_count = self.col_count * self.row_count
         
         # ht for rows, cols, boxes
@@ -27,6 +28,16 @@ class Matrix:
   
         # 2D 9x9 matrix
         self.matrix = self.__create_matrix()
+    
+    # Clues_count returns the number of provided clues
+    def clues_count(self):
+        count = 0
+
+        for key in self.rows:
+            for number in self.rows[key]:
+               if self.rows[key][number]["is_clue"]:
+                   count += 1
+        return count
 
     # Update_ht takes a hash table for rows, cols, or boxes and adds
     # a nested hash table to store values 1 -> 9
@@ -123,9 +134,6 @@ class Matrix:
             else:
                 return "I"
     
-    def value(self, i, j):
-        return self.matrix[i][j].value
-    
     # __create_matrix creates a 9 x 9 matrix with empty Cell() objects
     def __create_matrix(self):
 
@@ -139,27 +147,32 @@ class Matrix:
 
         # initialize forward traversal
         direction = "forward"
+
+        # intiial process counter
+        counter = 1
         
-        self.process_cell(cell, direction)
-           
+        self.process_cell(cell, direction, counter)
+
     # Process_cell applies the sudoku rules by row, column,
     # and box to find a possible correct value for that cell.
-    def process_cell(self, cell, direction):
-        print("inside process_cell")
+    def process_cell(self, cell, direction, counter):
         i = cell.i
         j = cell.j
+        temp_value = 0
 
         # skip cell if it is a clue
         if cell.is_clue:
-            #print("skipping - cell is clue")
+            self.print()
+
             if direction == "forward":
                 if j >= 8:
-                    self.traverse(i+1, 0, "forward")
+                    self.traverse(i+1, 0, direction, counter)
                 else:
-                    self.traverse(i, j+1, direction)
+                    self.traverse(i, j+1, direction, counter)
             elif direction == "backward":
-                self.backtrack(i, j-1, direction)
+                self.backtrack(i, j-1, direction, counter)
 
+        # update cell values
         else:
             if cell.value == 0:
                 temp_value = 1
@@ -171,64 +184,34 @@ class Matrix:
                 self.boxes[current_box][current]["is_present"] = False
                 temp_value = current + 1
 
-        ## maybe just do one while loop
-        while temp_value <= 9:
+        # loop to check for cell value in rows, cols, and boxes hash tables
+        while temp_value > 0 and temp_value <= 9:
             current_box = cell.box_value
-            print("temp_value =", temp_value)
-            print("self.rows[i][temp_value] =", self.rows[i][temp_value])
-            print("self.cols[j][temp_value] =", self.cols[j][temp_value])
-            print("self.boxes[current_box][temp_value] =", self.boxes[current_box][temp_value])
-
             if self.rows[i][temp_value]["is_present"] == True:
-                print("row has temp_value", temp_value)
                 temp_value += 1
             elif self.cols[j][temp_value]["is_present"] == True:
-                print("col has temp_value", temp_value)
                 temp_value += 1
             elif self.boxes[current_box][temp_value]["is_present"] == True:
-                print("box has temp_value", temp_value)
                 temp_value += 1
-            # if none of the three have it, exit the loop
             else:
-                print("temp_value", temp_value, "not in row, col, or box")
+                # if none of the three have the value, exit the loop
                 break
 
-        # # does row[i] have temp_value?
-        # while temp_value <= 9 and self.rows[i][temp_value]["is_present"] == True:
-        #     print("row temp_value =", temp_value)
-        #     temp_value += 1
-        
-        # # does col[j] have temp value?
-        # while temp_value <= 9 and self.cols[j][temp_value]["is_present"] == True:
-        #     print("col temp_value =", temp_value)
-        #     temp_value += 1
-
-        # # does box holding [i][j] have temp_value?
-        # current_box = cell.box_value
-        # while temp_value <= 9 and self.boxes[current_box][temp_value]["is_present"] == True:
-        #     print("boxes temp_value =", temp_value)
-        #     temp_value += 1
-        
-        print("temp_value before assignment =", temp_value)
-        # 1. Assign value
-        if temp_value <= 9:
+        # 1. Assign value to current cell
+        if temp_value > 0 and temp_value <= 9:
             cell.value = temp_value
             current_box = cell.box_value
-            #print("i =", i, "j =", j, "temp_value =", temp_value)
-
+    
             self.rows[i][temp_value]["is_present"] = True
-            #print("self.rows[i][temp_value] =", self.rows[i][temp_value])
-
             self.cols[j][temp_value]["is_present"] = True
             self.boxes[current_box][temp_value]["is_present"] = True
 
             self.print()
 
-            print("inside if temp_value <= 9: j =", j)
             if j >= 8:
-                self.traverse(i+1, 0, "forward")
+                self.traverse(i+1, 0, "forward", counter)
             else:
-                self.traverse(i, j+1, "forward")
+                self.traverse(i, j+1, "forward", counter)
       
         # 2. Backtrack
         else:
@@ -248,13 +231,13 @@ class Matrix:
             self.print()
 
             if j < 0:
-                self.backtrack(i-1, 8, "backward")
+                self.backtrack(i-1, 8, "backward", counter)
             else:
-                self.backtrack(i, j-1, "backward")
+                self.backtrack(i, j-1, "backward", counter)
 
     # Backtrack takes an i and j value and recursively
     # backtracks through the matrix until the beginning.
-    def backtrack(self, i = None, j = None, direction = None):
+    def backtrack(self, i = None, j = None, direction = None, counter = None):
         # initialize i value
         if i == None:
             i = 8
@@ -275,11 +258,10 @@ class Matrix:
         if j < 0 or j > 8:
             raise Exception("j value is out of range")
 
-        # print / process current cell
-        # print("i =", i, " j =", j, " [", i, "][", j, "] =", self.matrix[i][j].value)
+        # process current cell
         cell = self.matrix[i][j]
-        print("i =", i, " j =", j, " [", i, "][", j, "] =", cell.value)
-        self.process_cell(cell, direction)
+        self.print_iteration_header(i, j, cell.value, direction, counter)
+        self.process_cell(cell, direction, counter+1)
 
         # base case: upper-left corner of matrix
         if i == 0 and j == 0:
@@ -295,7 +277,7 @@ class Matrix:
 
     # traverse takes an i and j value and recursively
     # traverses forward through the matrix until the end.
-    def traverse(self, i = None, j = None, direction = None):
+    def traverse(self, i = None, j = None, direction = None, counter = None):
 
         # initialize i value
         if i == None:
@@ -308,6 +290,10 @@ class Matrix:
         # initialize direction
         if direction == None:
             direction = "forward"
+
+        # base case: bottom-right corner of matrix
+        if i == 9:
+            exit()
         
         # check for i values in range
         if i < 0 or i > 8:
@@ -317,14 +303,10 @@ class Matrix:
         if j < 0 or j > 8:
             raise Exception("j value is out of range")
 
-        # base case: bottom-right corner of matrix
-        if i == self.row_count and j == self.col_count:
-            return
-        
-        # print / process current cell
+        # process current cell
         cell = self.matrix[i][j]
-        print("i =", i, " j =", j, " [", i, "][", j, "] =", cell.value)
-        self.process_cell(cell, direction)
+        self.print_iteration_header(i, j, cell.value, direction, counter)
+        self.process_cell(cell, direction, counter+1)
 
         # traverse current row, column by column
         if j < self.row_count - 1:
@@ -333,6 +315,10 @@ class Matrix:
         # if last column reached, move to next row
         elif i < self.col_count - 1:
             self.traverse(i+1, 0, direction)
+    
+    def print_iteration_header(self, i, j, value, direction, counter):
+        print(f"iteration # {counter:3}  --> {direction}")
+        print(f"   i = {i}  j = {j}  [{i}][{j}] = {value}")
 
     def print(self):
         indices = [0, 1, 2, 3, 4, 5, 6, 7, 8]

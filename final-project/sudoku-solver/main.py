@@ -25,25 +25,26 @@ m = Matrix()
 # create matrix from rows []
 m.create_from_array(rows)
 
-# traverse matrix
-# m.traverse(0,0)
-
-# backtrack matrix
-#m.backtrack(8,8)
-
-# print matrix
+# print initial sudoku grid
+print("\n********  initial sudoku grid  ********")
 m.print()
 
+# number of empty cells
+
 # print rows ht
-# m.pretty_print(m.rows, "rows")
+#m.pretty_print(m.rows, "rows")
+
+# number of clues
+print("clues_count =", m.clues_count())
 
 # print cols ht
-m.pretty_print(m.cols, "cols")
+# m.pretty_print(m.cols, "cols")
 
 # print cols[7][9]
-print("m.cols[7][9] =", m.cols[7][9])
+# print("m.cols[7][9] =", m.cols[7][9])
 
 # print boxes ht
-#m.pretty_print(m.boxes, "boxes")
+# m.pretty_print(m.boxes, "boxes")
 
+# solve sudoku
 m.solve()
