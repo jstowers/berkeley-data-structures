@@ -29,7 +29,7 @@ class Matrix:
         # 2D 9x9 matrix
         self.matrix = self.__create_matrix()
     
-    # Clues_count returns the number of provided clues
+    # Clues_count returns the number of provided clues.
     def clues_count(self):
         count = 0
 
@@ -39,6 +39,7 @@ class Matrix:
                    count += 1
         return count
     
+    # Empty_cells_count returns the number of empty cells.
     def empty_cells_count(self):
         count = 0
 
@@ -62,7 +63,7 @@ class Matrix:
                 index += 1
 
     # Create_from_array does the heavy lifting in creating a 2D 9 x 9 
-    # Sudoku grid comprising 81 Cell objects.
+    # sudoku grid comprising 81 Cell objects.
     def create_from_array(self, rows_array):
         # check for empty array
         if len(rows_array) == 0:
@@ -143,13 +144,13 @@ class Matrix:
             else:
                 return "I"
     
-    # __create_matrix creates a 9 x 9 matrix with empty Cell() objects
+    # Create_matrix creates a 9 x 9 matrix with empty Cell() objects.
     def __create_matrix(self):
 
         # initialize empty 2D matrix
         return  [[Cell() for j in range(self.col_count)] for i in range(self.row_count)]
     
-    # solve starts the matrix traversal and processing
+    # Solve starts the sudoku grid traversal and processing.
     def solve(self):
         # initialize top-left cell in grid
         cell = self.matrix[0][0]
@@ -285,7 +286,7 @@ class Matrix:
         elif i > 0:
             self.backtrack(i-1, 8, direction)
 
-    # traverse takes an i and j value and recursively
+    # Traverse takes an i and j value and recursively
     # traverses forward through the matrix until the end.
     def traverse(self, i = None, j = None, direction = None, counter = None):
 
@@ -326,6 +327,7 @@ class Matrix:
         elif i < self.col_count - 1:
             self.traverse(i+1, 0, direction)
     
+    # Print the iteration header.
     def print_iteration_header(self, i, j, value, direction, counter):
         if direction == "forward":
             print(f"iteration # {counter:3}  {direction} -->")
@@ -333,6 +335,7 @@ class Matrix:
             print(f"iteration # {counter:3}  <-- {direction}")
         print(f"   i = {i}  j = {j}  [{i}][{j}] = {value}")
 
+    # Print the sudoku grid.
     def print(self):
         indices = [0, 1, 2, 3, 4, 5, 6, 7, 8]
         print()
@@ -344,7 +347,7 @@ class Matrix:
         for row in self.matrix]))
         print()
 
-    # pretty print hash table in json format
+    # Pretty print hash table in json format.
     def pretty_print(self, ht, label):
         print(f"{label} =\n", json.dumps(ht, indent = 4), "\n")
 
