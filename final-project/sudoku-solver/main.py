@@ -25,26 +25,34 @@ m = Matrix()
 # create matrix from rows []
 m.create_from_array(rows)
 
+print("\nWelcome to Sudoku 数独 Solver!\n")
+print("crafted with pride in Austin, Texas 🤠")
+print("Copyright 2023 Joseph Stowers")
+
 # print initial sudoku grid
 print("\n********  initial sudoku grid  ********")
 m.print()
 
+print("*************  grid data  *************\n")
+
+# number of clues
+print(f'  clues = {m.clues_count():-2}')
+
 # number of empty cells
+print("  empty =", m.empty_cells_count())
+
+# total cells
+print("  total =", m.cell_count)
 
 # print rows ht
 #m.pretty_print(m.rows, "rows")
 
-# number of clues
-print("clues_count =", m.clues_count())
-
 # print cols ht
-# m.pretty_print(m.cols, "cols")
-
-# print cols[7][9]
-# print("m.cols[7][9] =", m.cols[7][9])
+#m.pretty_print(m.cols, "cols")
 
 # print boxes ht
-# m.pretty_print(m.boxes, "boxes")
+#m.pretty_print(m.boxes, "boxes")
 
 # solve sudoku
+print("\n*************  iterations  ************\n")
 m.solve()

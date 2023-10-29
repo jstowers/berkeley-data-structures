@@ -38,6 +38,15 @@ class Matrix:
                if self.rows[key][number]["is_clue"]:
                    count += 1
         return count
+    
+    def empty_cells_count(self):
+        count = 0
+
+        for key in self.rows:
+            for number in self.rows[key]:
+               if not self.rows[key][number]["is_clue"]:
+                   count += 1
+        return count
 
     # Update_ht takes a hash table for rows, cols, or boxes and adds
     # a nested hash table to store values 1 -> 9
@@ -148,9 +157,10 @@ class Matrix:
         # initialize forward traversal
         direction = "forward"
 
-        # intiial process counter
+        # initial process counter
         counter = 1
         
+        self.print_iteration_header(0, 0, cell.value, direction, 0)
         self.process_cell(cell, direction, counter)
 
     # Process_cell applies the sudoku rules by row, column,
@@ -317,7 +327,10 @@ class Matrix:
             self.traverse(i+1, 0, direction)
     
     def print_iteration_header(self, i, j, value, direction, counter):
-        print(f"iteration # {counter:3}  --> {direction}")
+        if direction == "forward":
+            print(f"iteration # {counter:3}  {direction} -->")
+        elif direction == "backward":
+            print(f"iteration # {counter:3}  <-- {direction}")
         print(f"   i = {i}  j = {j}  [{i}][{j}] = {value}")
 
     def print(self):
