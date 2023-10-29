@@ -35,10 +35,13 @@ m.create_from_array(rows)
 m.print()
 
 # print rows ht
-m.pretty_print(m.rows, "rows")
+# m.pretty_print(m.rows, "rows")
 
 # print cols ht
-#m.pretty_print(m.cols, "cols")
+m.pretty_print(m.cols, "cols")
+
+# print cols[7][9]
+print("m.cols[7][9] =", m.cols[7][9])
 
 # print boxes ht
 #m.pretty_print(m.boxes, "boxes")

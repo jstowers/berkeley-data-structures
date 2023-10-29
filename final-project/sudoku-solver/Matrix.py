@@ -168,22 +168,26 @@ class Matrix:
                 self.boxes[current_box][current]["is_present"] = False
                 temp_value = current + 1
 
-
         ## maybe just do one while loop
         while temp_value <= 9:
             current_box = cell.box_value
+            print("temp_value =", temp_value)
+            print("self.rows[i][temp_value] =", self.rows[i][temp_value])
+            print("self.cols[j][temp_value] =", self.cols[j][temp_value])
+            print("self.boxes[current_box][temp_value] =", self.boxes[current_box][temp_value])
+
             if self.rows[i][temp_value]["is_present"] == True:
-                print("row has temp_value ", temp_value)
+                print("row has temp_value", temp_value)
                 temp_value += 1
             elif self.cols[j][temp_value]["is_present"] == True:
-                print("col has temp_value ", temp_value)
+                print("col has temp_value", temp_value)
                 temp_value += 1
             elif self.boxes[current_box][temp_value]["is_present"] == True:
-                print("box has temp_value ", temp_value)
+                print("box has temp_value", temp_value)
                 temp_value += 1
             # if none of the three have it, exit the loop
             else:
-                print("temp_value ", temp_value, "not in row, col, or box")
+                print("temp_value", temp_value, "not in row, col, or box")
                 break
 
         # # does row[i] have temp_value?
@@ -223,14 +227,19 @@ class Matrix:
                 self.traverse(i, j+1, "forward")
       
         # 2. Backtrack
-        # TODO: somehow we need to revert the is_present properties
-        # when we backtrack.
         else:
             cell.value = 0
             current_box = cell.box_value
-            self.rows[i][temp_value - 1]["is_present"] = False
-            self.cols[j][temp_value - 1]["is_present"] = False
-            self.boxes[current_box][temp_value - 1]["is_present"] = False
+
+            # reset is_present to false if the cell is not a clue
+            if self.rows[i][temp_value - 1]["is_clue"] == False:
+                self.rows[i][temp_value - 1]["is_present"] = False
+
+            if self.cols[j][temp_value -1]["is_clue"] == False:
+                self.cols[j][temp_value - 1]["is_present"] = False
+            
+            if self.boxes[current_box][temp_value - 1]["is_clue"] == False:
+                self.boxes[current_box][temp_value - 1]["is_present"] = False
 
             self.print()
 
