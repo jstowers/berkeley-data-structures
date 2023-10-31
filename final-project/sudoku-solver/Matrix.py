@@ -28,6 +28,10 @@ class Matrix:
   
         # 2D 9x9 matrix
         self.matrix = self.__create_matrix()
+
+        # traversal counters
+        self.forward_count = 0
+        self.backward_count = 0
     
     # Clues_count returns the number of provided clues.
     def clues_count(self):
@@ -271,6 +275,9 @@ class Matrix:
 
         # process current cell
         cell = self.matrix[i][j]
+  
+        if direction == "backward":
+            self.backward_count += 1
         self.print_iteration_header(i, j, cell.value, direction, counter)
         self.process_cell(cell, direction, counter+1)
 
@@ -302,8 +309,10 @@ class Matrix:
         if direction == None:
             direction = "forward"
 
-        # base case: bottom-right corner of matrix
+        # base case: finished processing bottom-right corner of matrix
         if i == 9:
+            print(f"  forward count = {self.forward_count:3}")
+            print(f"backtrack count = {self.backward_count:3}")
             exit()
         
         # check for i values in range
@@ -316,6 +325,8 @@ class Matrix:
 
         # process current cell
         cell = self.matrix[i][j]
+        if direction == "forward":
+            self.forward_count += 1
         self.print_iteration_header(i, j, cell.value, direction, counter)
         self.process_cell(cell, direction, counter+1)
 
@@ -350,5 +361,3 @@ class Matrix:
     # Pretty print hash table in json format.
     def pretty_print(self, ht, label):
         print(f"{label} =\n", json.dumps(ht, indent = 4), "\n")
-
-

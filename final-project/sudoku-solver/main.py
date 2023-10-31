@@ -27,7 +27,7 @@ m.create_from_array(rows)
 
 print("\nWelcome to Sudoku 数独 Solver!\n")
 print("crafted with pride in Austin, Texas 🤠")
-print("Copyright 2023 Joseph Stowers")
+print("© Copyright Joseph Stowers 2023")
 
 # print initial sudoku grid
 print("\n********  initial sudoku grid  ********")
@@ -42,16 +42,16 @@ print(f'  clues = {m.clues_count():-2}')
 print("  empty =", m.empty_cells_count())
 
 # total cells
-print("  total =", m.cell_count)
+print(f"  total = {m.cell_count}\n")
 
 # print rows ht
-#m.pretty_print(m.rows, "rows")
+m.pretty_print(m.rows, "rows")
 
 # print cols ht
-#m.pretty_print(m.cols, "cols")
+m.pretty_print(m.cols, "cols")
 
 # print boxes ht
-#m.pretty_print(m.boxes, "boxes")
+m.pretty_print(m.boxes, "boxes")
 
 # solve sudoku
 print("\n*************  iterations  ************\n")
