@@ -1,9 +1,12 @@
 # Sudoku Solver
-# New York Times - Easy
-# Sunday, October 22, 2023
+# Joseph Stowers
+# Tuesday, October 31, 2023
+# COMPSCIX404.1-015 Final Project
 
 from Matrix import Matrix
 
+# New York Times - Easy
+# Sunday, October 22, 2023
 # define each row with the given clues
 # empty cells = 0
 r0 = [2, 0, 8, 0, 0, 4, 3, 0, 0]
@@ -55,4 +58,4 @@ print(f"  total = {m.cell_count}")
 
 # solve sudoku
 print("\n***************  iterations  **************\n")
-#m.solve()
+m.solve()
