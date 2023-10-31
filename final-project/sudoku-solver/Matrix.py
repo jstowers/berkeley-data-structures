@@ -350,13 +350,19 @@ class Matrix:
     def print(self):
         indices = [0, 1, 2, 3, 4, 5, 6, 7, 8]
         print()
-        print("|----------------- j -----------------|")
-        print("|                                     |")
-        print(''.join(['{:4}'.format(index) for index in indices]))
-        print("=======================================")
-        print('\n'.join([''.join(['{:4}'.format(item.value) for item in row]) 
-        for row in self.matrix]))
+        print("      |-----------------  j  ---------------")
+        print(f"      |{''.join(['{:4}'.format(index) for index in indices])}")
+        print("  ==========================================")
+        for index, row in enumerate(self.matrix):
+            self.print_row(index, row)
         print()
+
+    # Print an individual row with its values.
+    def print_row(self, index, row):
+        if index == 4:
+            print(f"i {index:2}  |   {'   '.join(str(number.value) for number in row)}")
+        else:
+            print(f"{index:4}  |   {'   '.join(str(number.value) for number in row)}")
 
     # Pretty print hash table in json format.
     def pretty_print(self, ht, label):

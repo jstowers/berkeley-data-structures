@@ -30,10 +30,10 @@ print("crafted with pride in Austin, Texas 🤠")
 print("© Copyright Joseph Stowers 2023")
 
 # print initial sudoku grid
-print("\n********  initial sudoku grid  ********")
+print("\n**********  initial sudoku grid  ***********")
 m.print()
 
-print("*************  grid data  *************\n")
+print("***************  grid data  ***************\n")
 
 # number of clues
 print(f'  clues = {m.clues_count():-2}')
@@ -42,17 +42,17 @@ print(f'  clues = {m.clues_count():-2}')
 print("  empty =", m.empty_cells_count())
 
 # total cells
-print(f"  total = {m.cell_count}\n")
+print(f"  total = {m.cell_count}")
 
 # print rows ht
-m.pretty_print(m.rows, "rows")
+#m.pretty_print(m.rows, "rows")
 
 # print cols ht
-m.pretty_print(m.cols, "cols")
+#m.pretty_print(m.cols, "cols")
 
 # print boxes ht
-m.pretty_print(m.boxes, "boxes")
+#m.pretty_print(m.boxes, "boxes")
 
 # solve sudoku
-print("\n*************  iterations  ************\n")
-m.solve()
+print("\n***************  iterations  **************\n")
+#m.solve()
