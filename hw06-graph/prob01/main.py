@@ -4,7 +4,7 @@
 # Graph - Depth First Search
 # --------------------------
 # Write a depth first search function that accepts a starting vertex 
-# and an ending vertex. If the ending vertex is found, It should also 
+# and an ending vertex. If the ending vertex is found, it should also 
 # return the path of the search.
 
 from Graph import AdjacencyMatrixGraph

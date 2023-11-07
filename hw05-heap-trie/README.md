@@ -108,8 +108,8 @@ Incomplete:
 2. __root node__ is the greatest value in a max heap.  The root node is the smallest value in a min heap.
 
 
-### Alternative Heap Implementations
+### Heap Implementations
 
-An array implementation is the most common.
+1. array - most common
 
-An alternate implementation is to use linked nodes.
+2. linked nodes - more intensive implementation, requires 3x memory because of next and previous pointers

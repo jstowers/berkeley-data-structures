@@ -99,7 +99,7 @@ class LinkedList:
             self.head = self.head.next
             self.count -= 1
             return
-        
+       
         current = self.head
         prev = current
         while current is not None:

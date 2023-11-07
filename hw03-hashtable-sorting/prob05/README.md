@@ -82,7 +82,7 @@ By dividing terms, we get:
 
 [ . . ] + k = x
 
-Since we have a target sum, k, and a cumulative sum, x, we have a difference, [ . . ] that is equal to x - k.
+Since we have a target sum, k, and a cumulative sum, x, we have a difference, [ . . ], that is equal to x - k.
 
 If that difference is stored in a hash table, we can look up its corresponding index value, i_diff.
 By subtracting i - i_diff, we get the length of k.
