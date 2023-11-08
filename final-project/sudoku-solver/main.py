@@ -30,7 +30,7 @@ m.create_from_array(rows)
 
 print("\nWelcome to Sudoku 数独 Solver!\n")
 print("crafted with pride in Austin, Texas 🤠")
-print("© Copyright Joseph Stowers 2023\n")
+print("© Copyright 2023 Joseph Stowers\n")
 
 print("            Happy 🎃 Halloween!")
 
