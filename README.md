@@ -1,15 +1,20 @@
-# berkeley-data-structures
-
-COMPSCIX404.1-015 Data Structures and Algorithms
+## berkeley-data-structures
 
 University of California Berkeley Extension
 
-Prof. Carl Limsico | Fall 2023
+COMPSCIX404.1-015
 
+Data Structures and Algorithms
 
-## Overview
+Prof. Carl Limsico
 
-I completed these problems as part of Berkeley Extension's Data Structures and Algorithms course.
+Fall 2023
+
+---
+
+### Overview
+
+I completed the attached problems as part of this course:
 
 Week 1 - Big O Notation and Arrays
 
@@ -22,3 +27,11 @@ Week 4 - Linked Lists and Trees
 Week 5 - Tree Traversal, Heaps, Tries
 
 Week 6 - Graphs, Dijkstra's Algorithm, Topological Sort
+
+Week 7 - Dynamic Programming and Optimization
+
+Week 8 - Bit Manipulation and Compression
+
+Week 9 - Final Project
+
+Week 10 - Final Exam
