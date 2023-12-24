@@ -162,7 +162,7 @@ class Matrix:
         # initialize forward traversal
         direction = "forward"
 
-        # initial process counter
+        # initialize process counter
         counter = 1
         
         self.print_iteration_header(0, 0, cell.value, direction, 0)
